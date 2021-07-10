@@ -13,7 +13,7 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 //import Palettefrom './styles/Theme';
-import { StyledText } from './styles/StyledText';
+import { StyledText } from './styles/Styled';
 /* const theme = createMuiTheme({
 
 }) */

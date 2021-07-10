@@ -49,3 +49,11 @@ body {
 a {
   color: #61dafb;
 }
+
+.box-generic {
+  text-align: center;
+  justify-content: center;
+  padding: 30px;
+  border-radius: 5px;
+  box-shadow: 0 3px 5px 2px rgba(0,0,0,.3);
+}
