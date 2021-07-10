@@ -11,11 +11,20 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+//import Palettefrom './styles/Theme';
+import { StyledText } from './styles/StyledText';
+/* const theme = createMuiTheme({
+
+}) */
+
+
 
 function App() {
 
   return (
     <Router>
+      
       <div>
         <Header />
         <nav>
@@ -30,6 +39,8 @@ function App() {
               <Link to="/register">Register</Link>
             </li>
           </ul>
+          <p>hi</p>
+          <StyledText><p>hi</p></StyledText>
         </nav>
 
         <Footer />
