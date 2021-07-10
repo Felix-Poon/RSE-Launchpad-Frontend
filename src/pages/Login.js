@@ -38,7 +38,8 @@ export function Login() {
         <StyledInput 
           label="Email" 
           placeholder="sample@email.com"
-          onBlur={(e) => setEmail(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           error={error}
         />
       </div>
@@ -55,8 +56,9 @@ export function Login() {
       <StyledText>Welcome back!</StyledText>
       <StyledInput 
         label="Password" 
-        type="password"
+        type="text"
         placeholder="password"
+        value={password}
         error={error}
         onChange={(e) => setPassword(e.target.value)}
         />
@@ -73,7 +75,6 @@ export function Login() {
     <Container maxWidth='sm'>
       <Box color='black' bgcolor='#E4816B' className='box-generic'>
           {validEmail ? passwordDialogue : emailDialogue}
-        
       </Box>
     </Container>
   );
