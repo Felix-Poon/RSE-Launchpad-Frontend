@@ -6,7 +6,7 @@ export function Footer() {
 
   return(
     <p>
-      - FOOOTER -
+      - FOOTER -
     </p>
   );
 }
