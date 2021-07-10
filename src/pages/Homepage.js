@@ -1,10 +1,11 @@
 import React from 'react';
+import { Container } from '@material-ui/core';
 
 export function Homepage() {
 
   return(
-    <p>
-      Home
-    </p>
+    <Container maxWidth='sm'>
+      HOME
+    </Container>
   );
 }
