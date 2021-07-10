@@ -27,8 +27,12 @@ const useStyles = makeStyles({
     height: 48,
     padding: '0 30px',
     margin: '10px',
-    boxShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-    stroke: '1'
+    boxShadow: '1px 1px 3px rgba(0,0,0,0.5)',
+    stroke: '1',
+    '&:hover': {
+      cursor: 'pointer',
+      boxShadow: '0px 0px 15px 5px rgba(255,255,255,0.71)',
+    }
   }
 })
 
@@ -52,9 +56,9 @@ export function StyledInput(params) {
   );
 }
 
-export function StyledButton(params) {
+export function PrimaryButton(params) {
   const classes = useStyles();
   return(
-    <Button onClick={params.onClick} className={classes.button}>{params.text}</Button>
+    <Button onClick={params.onClick} className={classes.button} onBlur={params.onBlur}>{params.text}</Button>
   );
 }

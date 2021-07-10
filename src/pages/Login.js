@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Box } from '@material-ui/core';
-import { StyledText, StyledInput, StyledButton } from '../styles/Styled';
+import { StyledText, StyledInput, PrimaryButton } from '../styles/Styled';
 import TextField from '@material-ui/core/TextField';
 
 
 export function Login() {
+  const [email, setEmail] = React.useState("");
 
   return(
     <Container maxWidth='sm'>
@@ -15,9 +16,13 @@ export function Login() {
             label="Email"
             variant="filled"
             /> */}
-          <StyledInput label="Email" placeholder="sample@email.com"></StyledInput>
+          <StyledInput 
+            label="Email" 
+            placeholder="sample@email.com"
+            onBlur={(e) => setEmail(e.target.value)}
+          ></StyledInput>
         </div>
-        <StyledButton text="Next"/>
+        <PrimaryButton text="Next"/>
       </Box>
     </Container>
   );
