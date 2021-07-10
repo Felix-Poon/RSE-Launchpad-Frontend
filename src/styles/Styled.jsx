@@ -52,6 +52,11 @@ export function StyledInput(params) {
       label={params.label}
       variant='filled'
       placeholder={params.placeholder}
+      error={params.error}
+      onBlur={params.onBlur}
+      type={params.type}
+      value={params.value}
+      onChange={params.onChange}
       />
   );
 }
