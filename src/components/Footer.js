@@ -2,11 +2,11 @@ import React from 'react';
 
 
 // Put header here
-export function Header() {
+export function Footer() {
 
   return(
     <p>
-      - HEADER -
+      - FOOOTER -
     </p>
   );
 }
