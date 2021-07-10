@@ -33,26 +33,37 @@ export function Login() {
 
   const emailDialogue = (
     <div>
-      <StyledText>What is your email?</StyledText>
-      <StyledInput 
-        label="Email" 
-        placeholder="sample@email.com"
-        onBlur={(e) => setEmail(e.target.value)}
-        error={error}
+      <div>
+        <StyledText>What is your email?</StyledText>
+        <StyledInput 
+          label="Email" 
+          placeholder="sample@email.com"
+          onBlur={(e) => setEmail(e.target.value)}
+          error={error}
+        />
+      </div>
+      <PrimaryButton 
+        text="Next"
+        onClick={handleSubmit}
       />
     </div>
   );
 
   const passwordDialogue = (
     <div>
+      <div>
       <StyledText>Welcome back!</StyledText>
       <StyledInput 
         label="Password" 
         type="password"
-        placeholder="hi"
+        placeholder="password"
         error={error}
         onChange={(e) => setPassword(e.target.value)}
-        
+        />
+      </div>
+      <PrimaryButton 
+        text="Sign In"
+        onClick={handleSubmit}
       />
     </div>
     
@@ -62,10 +73,7 @@ export function Login() {
     <Container maxWidth='sm'>
       <Box color='black' bgcolor='#E4816B' className='box-generic'>
           {validEmail ? passwordDialogue : emailDialogue}
-        <PrimaryButton 
-          text="Next"
-          onClick={handleSubmit}
-        />
+        
       </Box>
     </Container>
   );
