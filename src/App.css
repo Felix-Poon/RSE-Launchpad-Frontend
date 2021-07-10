@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+.styled-text {
+  font-family: 'Work Sans', sans-serif;
+}
+
+body {
+  background-color: #242135;
+  color: white;
+}
+
+a {
+  color: #61dafb;
+}
