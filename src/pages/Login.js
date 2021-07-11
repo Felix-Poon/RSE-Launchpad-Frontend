@@ -13,15 +13,11 @@ export function Login() {
   const [password, setPassword] = React.useState("");
   const [validEmail, setValidEmail] = React.useState(false);
 
+  let emailError = error ? "Invalid email" : "Email";
+  let passwordError = error ? "Incorrect password" : "Password";
 
-  const handleSubmit = (e) => {
+  const handleEmail = (e) => {
     e.preventDefault();
-    console.log('submit')
-    console.log(email)
-    console.log(validateEmail(email))
-
-    console.log(password)
-
     const emailCheck = validateEmail(email);
     if (!emailCheck) { 
       setError(true)
@@ -31,12 +27,19 @@ export function Login() {
     setValidEmail(emailCheck);
   }
 
+  const handlePassword = (e) => {
+    e.preventDefault();
+    /* Check login */
+
+  }
+
+
   const emailDialogue = (
     <div>
       <div>
         <StyledText>What is your email?</StyledText>
         <StyledInput 
-          label="Email" 
+          label={emailError} 
           placeholder="sample@email.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -45,7 +48,7 @@ export function Login() {
       </div>
       <PrimaryButton 
         text="Next"
-        onClick={handleSubmit}
+        onClick={handleEmail}
       />
     </div>
   );
@@ -55,9 +58,9 @@ export function Login() {
       <div>
       <StyledText>Welcome back!</StyledText>
       <StyledInput 
-        label="Password" 
-        type="text"
-        placeholder="password"
+        label={passwordError} 
+        type="password"
+        placeholder="Password"
         value={password}
         error={error}
         onChange={(e) => setPassword(e.target.value)}
@@ -65,10 +68,9 @@ export function Login() {
       </div>
       <PrimaryButton 
         text="Sign In"
-        onClick={handleSubmit}
+        onClick={handlePassword}
       />
     </div>
-    
   );
 
   return(
