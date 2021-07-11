@@ -3,8 +3,15 @@ import { Container, Box } from '@material-ui/core';
 import { StyledText, StyledInput, PrimaryButton } from '../styles/Styled';
 //import TextField from '@material-ui/core/TextField';
 import { validateEmail } from '../helpers/validation';
+import { Redirect } from 'react-router-dom';
 
-
+/* Check if user is existing */
+function checkExistingUser(email) {
+  /* fetch from endpoint */
+  const dummy = true;
+  
+  return dummy; // If existing
+}
 
 
 export function Login() {
@@ -12,6 +19,7 @@ export function Login() {
   const [error, setError] = React.useState(false);
   const [password, setPassword] = React.useState("");
   const [validEmail, setValidEmail] = React.useState(false);
+  const [existingUser, setExistingUser] = React.useState(null);
 
   let emailError = error ? "Invalid email" : "Email";
   let passwordError = error ? "Incorrect password" : "Password";
@@ -22,9 +30,15 @@ export function Login() {
     if (!emailCheck) { 
       setError(true)
     } else {
-      setError(false)
+      setError(false);
+      setValidEmail(true);
+      /* EMAIL IS VALID CHECK FOR EXISTING USER */
+      if (checkExistingUser(email)) {
+        setExistingUser(true);
+      } else {
+        setExistingUser(false);
+      }
     }
-    setValidEmail(emailCheck);
   }
 
   const handlePassword = (e) => {
@@ -33,6 +47,15 @@ export function Login() {
 
   }
 
+  const toRegister = () => {
+    console.log('to rego');
+    return (
+      <Redirect to={{
+        pathname: '/register',
+        state: { emailInput: email }
+      }} />
+    );
+  }
 
   const emailDialogue = (
     <div>
@@ -76,7 +99,7 @@ export function Login() {
   return(
     <Container maxWidth='sm'>
       <Box color='black' bgcolor='#E4816B' className='box-generic'>
-          {validEmail ? passwordDialogue : emailDialogue}
+          {(!existingUser && validEmail) ? toRegister : (existingUser && validEmail ? passwordDialogue : emailDialogue)}
       </Box>
     </Container>
   );
