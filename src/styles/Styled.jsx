@@ -76,13 +76,26 @@ export function StyledInput(params) {
 export function PrimaryButton(params) {
   const classes = useStyles();
   return(
-    <Button onClick={params.onClick} className={classes.button} onBlur={params.onBlur}>{params.text}</Button>
+    <Button 
+      onClick={params.onClick} 
+      className={classes.button} 
+      onBlur={params.onBlur}
+      >
+      {params.text}
+    </Button>
   );
 }
 
 export function SecondaryButton(params) {
   const classes = useStyles();
   return(
-    <Button onClick={params.onClick} className={classes.orangeBtn} onBlur={params.onBlur}>{params.text}</Button>
+    <Button 
+      onClick={params.onClick} 
+      className={classes.orangeBtn} 
+      onBlur={params.onBlur}
+      startIcon={params.startIcon}
+      >
+      {params.text}
+    </Button>
   );
 }
