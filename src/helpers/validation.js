@@ -3,12 +3,8 @@
 */
 
 /* Checks if all children in parent div are have empty values */
-export function ifEmpty(objects) {
-  let empty = false;
-  objects.childNodes.forEach(e => {
-      if (!e.childNodes[1].value) empty = true;
-  });
-  return empty;
+export function ifEmpty(str) {
+  return (str.length === 0 || !str.trim());
 }
 
 /* Checks if two strings match - used for password confirmation */

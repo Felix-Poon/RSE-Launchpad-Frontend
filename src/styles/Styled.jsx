@@ -1,6 +1,3 @@
-// DELETE
-
-
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Button } from '@material-ui/core';
@@ -33,6 +30,21 @@ const useStyles = makeStyles({
       cursor: 'pointer',
       boxShadow: '0px 0px 15px 5px rgba(255,255,255,0.71)',
     }
+  },
+  orangeBtn: {
+    background: 'linear-gradient(45deg, #db7962 30%, #ff9a83 80%)',
+    border: 0,
+    borderRadius: 3,
+    color: '#242135',
+    height: 48,
+    padding: '0 30px',
+    margin: '10px',
+    boxShadow: '1px 1px 3px rgba(0,0,0,0.5)',
+    stroke: '1',
+    '&:hover': {
+      cursor: 'pointer',
+      boxShadow: '0px 0px 15px 5px rgba(255,255,255,0.3)',
+    }
   }
 })
 
@@ -64,6 +76,26 @@ export function StyledInput(params) {
 export function PrimaryButton(params) {
   const classes = useStyles();
   return(
-    <Button onClick={params.onClick} className={classes.button} onBlur={params.onBlur}>{params.text}</Button>
+    <Button 
+      onClick={params.onClick} 
+      className={classes.button} 
+      onBlur={params.onBlur}
+      >
+      {params.text}
+    </Button>
+  );
+}
+
+export function SecondaryButton(params) {
+  const classes = useStyles();
+  return(
+    <Button 
+      onClick={params.onClick} 
+      className={classes.orangeBtn} 
+      onBlur={params.onBlur}
+      startIcon={params.startIcon}
+      >
+      {params.text}
+    </Button>
   );
 }

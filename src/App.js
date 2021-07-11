@@ -39,8 +39,6 @@ function App() {
           </ul>
         </nav>
 
-        <Footer />
-
         <Switch>
           {/* ADD MORE PAGES HERE */}
           <Route path="/login">
@@ -54,6 +52,7 @@ function App() {
           </Route>
         </Switch>
       </div>
+      <Footer />
     </Router>
   );
 }
