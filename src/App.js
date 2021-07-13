@@ -16,6 +16,8 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 /* const theme = createMuiTheme({
 
 }) */
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+
 
 
 
@@ -38,6 +40,9 @@ function App() {
             </li>
           </ul>
         </nav>
+        <h1>We now have Auth!</h1>
+
+      <AmplifySignOut />
 
         <Switch>
           {/* ADD MORE PAGES HERE */}
@@ -57,4 +62,5 @@ function App() {
   );
 }
 
-export default App;
+//export default App;
+export default withAuthenticator(App);

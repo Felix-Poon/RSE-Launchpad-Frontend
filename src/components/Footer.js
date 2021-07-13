@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    boxShadow: "none",
+    boxShadow: '0 3px 5px 2px rgba(0,0,0,.3)',
     backgroundColor: "#E4816B",
     position:'absolute',
     left:0,

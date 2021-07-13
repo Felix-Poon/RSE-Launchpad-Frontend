@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     fontWeight: "bolder",
     color: "#E4816B",
-    fontSize: '2rem',
+    fontSize: '2.25rem',
     fontFamily: 'Work Sans',
     textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
   },
