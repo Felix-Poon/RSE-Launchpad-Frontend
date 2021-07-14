@@ -12,7 +12,8 @@ const useStyles = makeStyles({
     fontFamily: 'Poppins, sans-serif',
     fontWeight: 600,
     width: '110px',
-    margin: '0 10px'
+    margin: '0 10px',
+    backgroundColor: 'white'
   }
 })
 
