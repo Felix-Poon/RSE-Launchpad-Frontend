@@ -26,6 +26,7 @@ const useStyles = makeStyles({
     margin: '10px',
     boxShadow: '1px 1px 3px rgba(0,0,0,0.5)',
     stroke: '1',
+    textTransform: 'none',
     '&:hover': {
       cursor: 'pointer',
       boxShadow: '0px 0px 15px 5px rgba(255,255,255,0.71)',

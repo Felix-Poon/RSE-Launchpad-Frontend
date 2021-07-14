@@ -11,21 +11,26 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-//import Palettefrom './styles/Theme';
-/* const theme = createMuiTheme({
-
-}) */
+//import { makeStyles } from '@material-ui/core/styles';
 
 
+/* CHECK IF USER LOGGED IN */
+// If logged in render dashboard
+// If not search ?
 
+/* const useStyles = makeStyles({
+  bg: {
+    margin: '0.5rem 2rem',
+    backgroundColor: 'white'
+  }
+})
+ */
 function App() {
-
   return (
     <Router>
       <div>
         <Header />
-        <nav>
+        {/* <nav>
           <ul>
             <li>
               <Link to="/">Home</Link>
@@ -37,7 +42,7 @@ function App() {
               <Link to="/register">Register</Link>
             </li>
           </ul>
-        </nav>
+        </nav> */}
 
         <Switch>
           {/* ADD MORE PAGES HERE */}
@@ -52,7 +57,6 @@ function App() {
           </Route>
         </Switch>
       </div>
-      <Footer />
     </Router>
   );
 }
