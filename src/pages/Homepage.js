@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import { Container } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +35,14 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 0
 
   },
+  container: {
+    textAlign: 'center',
+    width: '50%',
+    padding: '0 70px'
+  },
+  heading: {
+    fontSize: '3rem'
+  }
 }));
 
 export function Homepage() {
@@ -41,7 +50,14 @@ export function Homepage() {
 
   return (
     <div className={classes.placement}>
-      <div className={classes.root}>
+      <div className={classes.container}>
+        <h1 className={classes.heading}>Make learning easier with Launchpad now</h1>
+      </div>
+      <div className={classes.container}>
+        Put search bar here :)
+      </div>
+
+      {/* <div className={classes.root}>
         <IconButton className={classes.iconButton} aria-label="menu">
             <SearchIcon />
           </IconButton>
@@ -65,7 +81,7 @@ export function Homepage() {
           />
 
         </div>
-      </div>
+      </div> */}
 
     </div>
   );
