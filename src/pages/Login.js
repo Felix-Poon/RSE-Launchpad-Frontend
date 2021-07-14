@@ -4,6 +4,46 @@ import { StyledText, StyledInput, PrimaryButton } from '../styles/Styled';
 //import TextField from '@material-ui/core/TextField';
 import { validateEmail } from '../helpers/validation';
 import { Redirect } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+
+
+
+const useStyles = makeStyles((theme) => ({
+  placement: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 500,
+  },
+  container: {
+    /* textAlign: 'center', */
+    width: '50%',
+    padding: '0 90px'
+  },
+  heading: {
+    fontSize: '3rem'
+  },
+  paper: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
 /* Check if user is existing */
 function checkExistingUser(email) {
@@ -15,6 +55,7 @@ function checkExistingUser(email) {
 
 
 export function Login() {
+  const classes = useStyles();
   const [email, setEmail] = React.useState("");
   const [error, setError] = React.useState(false);
   const [password, setPassword] = React.useState("");
@@ -97,10 +138,67 @@ export function Login() {
   );
 
   return(
-    <Container maxWidth='sm'>
+    <div className={classes.placement}>
+      <div className={classes.container}>
+        <h1 className={classes.heading}>
+          Welcome back!
+        </h1>
+        <h3>Be a part of the most inspired community of self-learners.</h3>
+      </div>
+      <div className={classes.container}>
+        <Container maxWidth='sm'>
+          <Box bgcolor='white' color="black" className='box-generic'>
+          <div className={classes.paper}>
+              <form className={classes.form} noValidate>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                />
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Sign In
+                </Button>
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
+              </form>
+            </div>
+          </Box>
+        </Container>
+      </div>
+
+    </div>
+    /* <Container maxWidth='sm'>
       <Box color='black' bgcolor='#E4816B' className='box-generic'>
           {(!existingUser && validEmail) ? toRegister : (existingUser && validEmail ? passwordDialogue : emailDialogue)}
       </Box>
-    </Container>
+    </Container> */
   );
 }

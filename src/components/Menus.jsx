@@ -11,7 +11,8 @@ const useStyles = makeStyles({
     color: '#8708BD',
     fontFamily: 'Poppins, sans-serif',
     fontWeight: 600,
-    width: '120px'
+    width: '110px',
+    margin: '0 10px'
   }
 })
 
@@ -21,11 +22,18 @@ export function LoginMenu() {
     <div>
       <Link to='login'>
         <Button
-          text="sign in"
           variant="contained"
           className={classes.btn}
           >
-            Sign In
+            Log In
+        </Button>
+      </Link>
+      <Link to='register'>
+        <Button
+          variant="contained"
+          className={classes.btn}
+          >
+            Sign Up
           </Button>
       </Link>
     </div>

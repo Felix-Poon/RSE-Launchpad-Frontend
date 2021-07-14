@@ -17,10 +17,10 @@ const useStyles = makeStyles((theme) => ({
     },
 
   placement: {
-    height: 500,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    height: 500,
   },
 
   iconButton: {
