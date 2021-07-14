@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import { LoginMenu, LogoutMenu } from './Menus';
 import Icon from '@mdi/react'
 import { mdiRocketLaunch } from '@mdi/js';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,15 +42,18 @@ export function Header() {
 
     <AppBar position="static" color="transparent" className={classes.root}>
       <Toolbar>
-        <Icon path={mdiRocketLaunch}
-          title="User Profile"
-          size={3}
-          color="white"
-          style={{margin:'0 10px'}}
-        />
-        <h1 className={classes.title}>
-          launchpad.
-        </h1>
+        <Link to="/" style={{display: 'flex', color: 'white'}}>
+          <Icon path={mdiRocketLaunch}
+            title="User Profile"
+            size={3}
+            color="white"
+            style={{margin:'auto 10px'}}
+          />
+          <h1 className={classes.title}>
+            launchpad.
+          </h1>
+        </Link>
+        
         <div style={{flex:1}}/>
         {menu}
       </Toolbar>
