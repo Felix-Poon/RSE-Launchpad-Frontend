@@ -53,6 +53,7 @@ export function AddResource() {
     <Container maxWidth='sm'>
       <h1>Add your own resource: </h1>
       <div>
+        <Form>
         <StyledInput 
           placeholder="Title"
           value={resourceName}
@@ -97,11 +98,13 @@ export function AddResource() {
           onChange={(e) => setEmail(e.target.value)}
           error={error}
         />
-      </div>
+      
       <PrimaryButton 
-        text="Next"
-        onClick={handleEmail}
+        text="Upload Resource"
+        onClick={handleSubmit}
       />
+      </Form>
+      </div>
     </Container>
   );
 }

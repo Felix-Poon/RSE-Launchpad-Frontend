@@ -55,9 +55,9 @@ function App() {
 
         <Switch>
           {/* ADD MORE PAGES HERE */}
-          <Route path="/add_resource">
+          {/* <Route path="/add_resource">
             <AddResource />
-          </Route>
+          </Route> */}
           <Route path="/login">
             <Login />
           </Route>
