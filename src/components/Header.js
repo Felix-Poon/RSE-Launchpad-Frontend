@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },  
   title: {
     flexGrow: 1,
-    fontWeight: 600,
+    fontWeight: 700,
     fontSize: '2rem',
     fontFamily: 'Poppins, sans-serif',/* 
     textShadow: '2px 2px 4px rgba(0,0,0,0.5)', */

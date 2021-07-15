@@ -7,13 +7,10 @@ import { Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 
 
 
@@ -143,7 +140,7 @@ export function Login() {
         <h1 className={classes.heading}>
           Welcome back!
         </h1>
-        <h3>Be a part of the most inspired community of self-learners.</h3>
+        <h3>Be a part of the world's most inspired community of self-learners.</h3>
       </div>
       <div className={classes.container}>
         <Container maxWidth='sm'>
