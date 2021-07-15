@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: 500,
+    height: '75vh',
   },
   container: {
     /* textAlign: 'center', */
@@ -74,32 +74,21 @@ export function Register() {
         <h3>Join the world's most inspired community of self-learners.</h3>
       </div>
       <div className={classes.container}>
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="sm">
           <Box bgcolor='white' color="black" className='box-generic'>
           <div className={classes.paper}>
             <form className={classes.form} noValidate>
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                   <TextField
                     autoComplete="fname"
-                    name="firstName"
+                    name="username"
                     variant="outlined"
                     required
                     fullWidth
-                    id="firstName"
-                    label="First Name"
+                    id="username"
+                    label="Username"
                     autoFocus
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="lastName"
-                    label="Last Name"
-                    name="lastName"
-                    autoComplete="lname"
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -126,9 +115,23 @@ export function Register() {
                   />
                 </Grid>
                 <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="confirm password"
+                    label="Confirm Password"
+                    type="password"
+                    id="confirmPassword"
+                    autoComplete="current-password"
+                  />
+                </Grid>
+                <Grid item xs={12}>
                   <FormControlLabel
                     control={<Checkbox value="allowExtraEmails" color="primary" />}
                     label="I want to receive inspiration, marketing promotions and updates via email."
+                    style={{textAlign:'left'}}
+
                   />
                 </Grid>
               </Grid>
@@ -143,7 +146,7 @@ export function Register() {
               </Button>
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/login" variant="body2">
                     Already have an account? Sign in
                   </Link>
                 </Grid>

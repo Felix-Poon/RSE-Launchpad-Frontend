@@ -19,12 +19,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: 500,
+    height: '75vh',
   },
   container: {
     /* textAlign: 'center', */
     width: '50%',
-    padding: '0 90px'
+    padding: '0 90px',
   },
   heading: {
     fontSize: '3rem'
