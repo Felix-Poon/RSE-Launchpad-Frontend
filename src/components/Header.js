@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
 import { makeStyles, responsiveFontSizes } from '@material-ui/core/styles';
-
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import { LoginMenu, LogoutMenu } from './Menus';
+import Icon from '@mdi/react'
+import { mdiRocketLaunch } from '@mdi/js';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     boxShadow: "none",
-    backgroundColor: "#242135" 
   },  
   title: {
     flexGrow: 1,
-    fontWeight: "bolder",
-    color: "#E4816B",
+    fontWeight: 700,
     fontSize: '2rem',
-    fontFamily: 'Work Sans',
-    textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
+    fontFamily: 'Poppins, sans-serif',/* 
+    textShadow: '2px 2px 4px rgba(0,0,0,0.5)', */
+    letterSpacing: '0.5pt'
   },
   signin: {
     fontWeight: "bolder",
     fontFamily: "Arial, sans-serif",
-    color: "#E4816B",
   },
 }));
 
@@ -40,12 +40,22 @@ export function Header() {
 
   return(
 
-    <AppBar position="static" className={classes.root}>
+    <AppBar position="static" color="transparent" className={classes.root}>
       <Toolbar>
-        <h1 className={classes.title}>launchpad.</h1>
+        <Link to="/" style={{display: 'flex', color: 'white'}}>
+          <Icon path={mdiRocketLaunch}
+            title="User Profile"
+            size={3}
+            color="white"
+            style={{margin:'auto 10px'}}
+          />
+          <h1 className={classes.title}>
+            launchpad.
+          </h1>
+        </Link>
+        
         <div style={{flex:1}}/>
         {menu}
-        {/* <Button className={classes.signin}>SIGN IN</Button> */}
       </Toolbar>
     </AppBar>
 
