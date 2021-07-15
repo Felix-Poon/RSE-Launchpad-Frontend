@@ -2,7 +2,6 @@
 import React from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
-import { withStyles } from "@material-ui/core/styles";
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
@@ -13,14 +12,14 @@ import classNames from "classnames";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // width: 500,
-    // '& > * + *': {
-    //   marginTop: theme.spacing(3),
-    // },
-    // backgroundColor: "#FFFFFF",
-
     "& label.Mui-focused": {
-      color: "white"
+      color: "white",
+      borderBottomColor: "white"
+    },
+    "& label.MuiInputLabel-root": {
+      color: "white",
+      borderBottomColor: "white"
+
     },
     "& .MuiInput-underline:before": {
       borderBottomColor: "white"
@@ -29,17 +28,11 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiInput-underline:after": {
       borderBottomColor: "white"
     },
-    "&:not(.Mui-disabled):hover::before": {
-      borderColor: "white"
-    },
-
   },
 
   placement: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
-    //height: 500,
   },
   container: {
     textAlign: 'center',
@@ -47,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '100px 0px 0px 100px',
   },
   heading: {
-    fontSize: '4rem'
+    fontSize: '3.7rem'
   },
   searchContainer: {
     textAlign: 'center',
@@ -63,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     float: "right",
     width: 450,
     marginTop: 0,
-  },
+  }, 
 
   tag: {
     height: 33,
@@ -76,16 +69,6 @@ const useStyles = makeStyles((theme) => ({
     },
     "& .MuiChip-deleteIcon": {
       color: "#572CBF",
-    },
-    "&:after": {
-      content: '""',
-      right: 10,
-      top: 6,
-      height: 12,
-      width: 12,
-      position: "absolute",
-      backgroundColor: "white",
-      zIndex: -1,
     },
   },
 
@@ -110,7 +93,6 @@ export function Homepage() {
             multiple
             id="tags-standard"
             className={classes.root}
-
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
                 <Chip
@@ -124,8 +106,6 @@ export function Homepage() {
                 />
               ))
             }
-
-
             options={subjectList}
             getOptionLabel={(option) => option.title}
             filterSelectedOptions
@@ -133,42 +113,12 @@ export function Homepage() {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Search by subject or resource type"
+                label="Search by subject or resource type"   
               />
             )}
-
-            
-
           />
         </div>
       </div>
-
-      {/* <div className={classes.root}>
-        <IconButton className={classes.iconButton} aria-label="menu">
-            <SearchIcon />
-          </IconButton>
-        <div className={classes.searchArea}>
-          <Autocomplete
-            multiple
-            id="tags-outlined"
-            options={subjectList}
-            getOptionLabel={(option) => option.title}
-            // defaultValue={[subjectList[5]]}
-            
-            filterSelectedOptions
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Search for resources"
-                placeholder="Selected"
-              />
-            )}
-
-          />
-
-        </div>
-      </div> */}
-
     </div>
   );
 }
