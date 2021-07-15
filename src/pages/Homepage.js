@@ -2,6 +2,7 @@
 import React from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from "@material-ui/core/styles";
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
@@ -12,12 +13,27 @@ import classNames from "classnames";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: 500,
-    '& > * + *': {
-      marginTop: theme.spacing(3),
+    // width: 500,
+    // '& > * + *': {
+    //   marginTop: theme.spacing(3),
+    // },
+    // backgroundColor: "#FFFFFF",
+
+    "& label.Mui-focused": {
+      color: "white"
     },
-    backgroundColor: "#FFFFFF",
+    "& .MuiInput-underline:before": {
+      borderBottomColor: "white"
     },
+
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "white"
+    },
+    "&:not(.Mui-disabled):hover::before": {
+      borderColor: "white"
+    },
+
+  },
 
   placement: {
     display: 'flex',
@@ -93,7 +109,7 @@ export function Homepage() {
           <Autocomplete
             multiple
             id="tags-standard"
-
+            className={classes.root}
 
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
