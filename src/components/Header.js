@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   root: {
     boxShadow: "none",
+    paddingTop: '10px'
   },  
   title: {
     flexGrow: 1,
@@ -33,7 +34,7 @@ const logoutMenu = (<LogoutMenu/>);
 // Put header here
 export function Header() {
   const classes = useStyles();
-  const [loggedIn, setLoggedIn] = React.useState(true);
+  const [loggedIn, setLoggedIn] = React.useState(false);
 
   /* Check if user logged in */
   let menu = loggedIn ? logoutMenu : loginMenu;
