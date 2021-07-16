@@ -12,6 +12,7 @@ import { Footer } from './components/Footer';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { AddResource } from './pages/AddResource';
+import { RateResource } from './pages/RateResource';
 import { ThemeProvider } from '@material-ui/core/styles';
 //import Palettefrom './styles/Theme';
 /* const theme = createMuiTheme({
@@ -56,7 +57,9 @@ function App() {
 
         <Switch>
           {/* ADD MORE PAGES HERE */}
-          <Route path="/add_resource">
+          <Route path="/rate_resource">
+            <RateResource />
+          </Route>          <Route path="/add_resource">
             <AddResource />
           </Route>
           <Route path="/login">
