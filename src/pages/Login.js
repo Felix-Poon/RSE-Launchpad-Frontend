@@ -45,7 +45,8 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'none',
     fontFamily: 'Poppins, sans-serif',
     fontWeight: 600,
-
+    margin: '10px 0 0 0',
+    fontSize: '1.25rem',
   },
 }));
 
@@ -176,19 +177,43 @@ export function Login() {
                   id="password"
                   autoComplete="current-password"
                 />
-                <Grid container>
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                  <FormControlLabel
+                    control={<Checkbox value="remember" color="primary" />}
+                    label={<span style={{fontFamily: 'Poppins, sans-serif', fontSize: '0.9rem'}}>Remember me</span>}
+                    style={{fontFamily: 'Poppins, sans-serif', textAlign: 'left'}}
+                  />
+                  <div style={{flex: 1}}/>
+                  <Link 
+                    href="#" 
+                    variant="body2" 
+                    style={{fontFamily: 'Poppins, sans-serif', fontSize: '0.9rem', margin: 'auto'}}
+                    >
+                    Forgot password?
+                  </Link>
+                </div>
+                {/* <div style={{display: 'flex', flexDirection: 'column'}}>
+                  <FormControlLabel
+                    control={<Checkbox value="remember" color="primary" />}
+                    label={<span style={{fontFamily: 'Poppins, sans-serif', fontSize: '0.9rem'}}>Remember me</span>}
+                    style={{fontFamily: 'Poppins, sans-serif'}}
+                  />
+                  <Link 
+                    href="#" 
+                    variant="body2" 
+                    style={{fontFamily: 'Poppins, sans-serif', fontSize: '0.9rem'}}
+                    >
+                    Forgot password?
+                  </Link>
+                </div> */}
+                {/* <Grid container>
                   <Grid item xs>
-                    <Link href="#" variant="body2">
-                      Forgot password?
-                    </Link>
+                    
                   </Grid>
                   <Grid item >
-                    <FormControlLabel
-                      control={<Checkbox value="remember" color="primary" />}
-                      label="Remember me"
-                    />
+                    
                   </Grid>
-                </Grid>
+                </Grid> */}
                 {/* <Link href="#" variant="body2">
                   Forgot password?
                 </Link> */}
@@ -198,10 +223,11 @@ export function Login() {
                     variant="contained"
                     color="primary"
                     className={classes.submit}
+                    style={{margin: '10px 0 0 0', fontSize: '1.25rem'}}
                   >
                     Launch
                     <Icon path={mdiRocketOutline}
-                      size={1}
+                      size={1.5}
                       color="white"
                       rotate='90'
                       style={{margin: '0 0 0 10px'}}

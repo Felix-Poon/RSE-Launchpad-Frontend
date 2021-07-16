@@ -12,6 +12,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 
+import { mdiRocketOutline } from '@mdi/js';
+import Icon from '@mdi/react'
 
 const useStyles = makeStyles((theme) => ({
   placement: {
@@ -38,6 +40,11 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    textTransform: 'none',
+    fontFamily: 'Poppins, sans-serif',
+    fontWeight: 600,
+    margin: '25px 0 0 0',
+    fontSize: '1.25rem',
   },
 }));
 
@@ -126,31 +133,36 @@ export function Register() {
                     autoComplete="current-password"
                   />
                 </Grid>
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                   <FormControlLabel
                     control={<Checkbox value="allowExtraEmails" color="primary" />}
                     label="I want to receive inspiration, marketing promotions and updates via email."
                     style={{textAlign:'left'}}
 
                   />
-                </Grid>
+                </Grid> */}
               </Grid>
               <Button
                 type="submit"
-                fullWidth
                 variant="contained"
                 color="primary"
                 className={classes.submit}
               >
                 Sign Up
+                <Icon path={mdiRocketOutline}
+                  size={1.5}
+                  color="white"
+                  rotate='90'
+                  style={{margin: '0 0 0 10px'}}
+                />
               </Button>
-              <Grid container justifyContent="flex-end">
+              {/* <Grid container justifyContent="flex-end">
                 <Grid item>
                   <Link href="/login" variant="body2">
                     Already have an account? Sign in
                   </Link>
                 </Grid>
-              </Grid>
+              </Grid> */}
             </form>
           </div>
 
