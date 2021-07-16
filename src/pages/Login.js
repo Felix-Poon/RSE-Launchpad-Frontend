@@ -6,13 +6,15 @@ import { validateEmail } from '../helpers/validation';
 import { Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
+import Icon from '@mdi/react'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 
-
+import Grid from '@material-ui/core/Grid';
+import { mdiRocketOutline } from '@mdi/js';
 
 const useStyles = makeStyles((theme) => ({
   placement: {
@@ -39,6 +41,10 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    textTransform: 'none',
+    fontFamily: 'Poppins, sans-serif',
+    fontWeight: 600,
+
   },
 }));
 
@@ -169,22 +175,38 @@ export function Login() {
                   id="password"
                   autoComplete="current-password"
                 />
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
-                >
-                  Sign In
-                </Button>
-                <FormControlLabel
-                  control={<Checkbox value="remember" color="primary" />}
-                  label="Remember me"
-                />
+                <Grid container>
+                  <Grid item xs>
+                    <Link href="#" variant="body2">
+                      Forgot password?
+                    </Link>
+                  </Grid>
+                  <Grid item >
+                    <FormControlLabel
+                      control={<Checkbox value="remember" color="primary" />}
+                      label="Remember me"
+                    />
+                  </Grid>
+                </Grid>
+                {/* <Link href="#" variant="body2">
+                  Forgot password?
+                </Link> */}
+                <div>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    Launch
+                    <Icon path={mdiRocketOutline}
+                      size={1}
+                      color="white"
+                      rotate='90'
+                      style={{margin: '0 0 0 10px'}}
+                    />
+                  </Button>
+                </div>
               </form>
             </div>
           </Box>

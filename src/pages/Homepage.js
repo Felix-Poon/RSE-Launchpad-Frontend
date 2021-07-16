@@ -33,6 +33,8 @@ const useStyles = makeStyles((theme) => ({
   placement: {
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
+    height: '75vh',
   },
   container: {
     textAlign: 'center',

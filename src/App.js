@@ -12,11 +12,12 @@ import { Footer } from './components/Footer';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { AddResource } from './pages/AddResource';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
 //import Palettefrom './styles/Theme';
 /* const theme = createMuiTheme({
 
 }) */
+import { Search } from './pages/Search';
 //import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -63,6 +64,9 @@ function App() {
           </Route>
           <Route path="/register">
             <Register />
+          </Route>
+          <Route path="/search/:query">
+            <Search />
           </Route>
           <Route path="/">
             <Homepage />
