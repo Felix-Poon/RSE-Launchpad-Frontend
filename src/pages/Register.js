@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '0 90px'
   },
   heading: {
-    fontSize: '3rem'
+    fontSize: '7vh'
   },
   paper: {
     display: 'flex',
@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
     margin: '25px 0 0 0',
     fontSize: '1.25rem',
   },
+  subtitle: {
+    fontSize: '2.5vh',
+  }
 }));
 
 export function Register() {
@@ -78,7 +81,9 @@ export function Register() {
         <h1 className={classes.heading}>
           Hi there!
         </h1>
-        <h3>Join the world's most inspired community of self-learners.</h3>
+        <h3 className={classes.subtitle}>
+          Join the world's most inspired community of self-learners.
+        </h3>
       </div>
       <div className={classes.container}>
         <Container maxWidth="sm">

@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '0 90px',
   },
   heading: {
-    fontSize: '3rem'
+    fontSize: '7vh'
   },
   paper: {
     display: 'flex',
@@ -47,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
     margin: '10px 0 0 0',
     fontSize: '1.25rem',
   },
+  subtitle: {
+    fontSize: '2.5vh',
+  }
 }));
 
 /* Check if user is existing */
@@ -147,7 +150,9 @@ export function Login() {
         <h1 className={classes.heading}>
           Welcome back!
         </h1>
-        <h3>Be a part of the world's most inspired community of self-learners.</h3>
+        <h3 className={classes.subtitle}>
+          Be a part of the world's most inspired community of self-learners.
+        </h3>
       </div>
       <div className={classes.container}>
         <Container maxWidth='sm'>
