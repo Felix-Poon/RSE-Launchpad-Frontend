@@ -81,7 +81,7 @@ export function Register() {
         <h3>Join the world's most inspired community of self-learners.</h3>
       </div>
       <div className={classes.container}>
-        <Container component="main" maxWidth="sm">
+        <Container maxWidth="sm">
           <Box bgcolor='white' color="black" className='box-generic'>
           <div className={classes.paper}>
             <form className={classes.form} noValidate>

@@ -48,7 +48,7 @@ export function LoginMenu() {
   const classes=useStyles();
   return(
     <div>
-      <Link to='login'>
+      <Link to='/login'>
         <Button
           variant="contained"
           className={classes.btn}
@@ -56,7 +56,7 @@ export function LoginMenu() {
             Log In
         </Button>
       </Link>
-      <Link to='register'>
+      <Link to='/register'>
         <Button
           variant="contained"
           className={classes.btn}
