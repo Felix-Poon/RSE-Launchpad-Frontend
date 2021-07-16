@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     textAlign: 'center',
     width: '50%',
-    padding: '100px 0px 0px 100px',
+    padding: '0px 90px',
   },
   heading: {
     fontSize: '3.7rem'
