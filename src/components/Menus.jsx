@@ -40,7 +40,8 @@ const useStyles = makeStyles({
   },
   menuItem: {
     fontFamily: 'Poppins, sans-serif',
-    fontSize: '0.9rem'
+    fontSize: '0.9rem',
+    color: 'black'
   }
 })
 
@@ -129,7 +130,9 @@ export function LogoutMenu() {
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <MenuItem onClick={handleClose} className={classes.menuItem}>Your resources</MenuItem>
+                    <a href="/user/resources">
+                      <MenuItem onClick={handleClose} className={classes.menuItem}>Your resources</MenuItem>
+                    </a>
                     <MenuItem onClick={handleClose} className={classes.menuItem}>Your ratings</MenuItem>
                     <MenuItem onClick={handleClose} className={classes.menuItem}>Account settings</MenuItem>
                     <hr style={{borderColor:'lightgrey', borderBottom: 0}}/>
