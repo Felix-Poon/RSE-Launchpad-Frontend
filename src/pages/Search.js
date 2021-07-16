@@ -21,8 +21,20 @@ export function Search() {
           author='author'
           rating='2'
         />
-
-        <SearchCard />
+        <SearchCard 
+          title='TITLE'
+          link='linkkk'
+          text='heyyy'
+          author='author'
+          rating='2'
+        />
+        <SearchCard 
+          title='TITLE'
+          link='linkkk'
+          text='heyyy'
+          author='author'
+          rating='2'
+        />
       </div>
     </div>
     
