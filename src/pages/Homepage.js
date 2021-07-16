@@ -6,15 +6,29 @@ import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import { Container } from '@material-ui/core';
+import Chip from '@material-ui/core/Chip';
+import classNames from "classnames";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: 500,
-    '& > * + *': {
-      marginTop: theme.spacing(3),
+    "& label.Mui-focused": {
+      color: "white",
+      borderBottomColor: "white"
     },
-    backgroundColor: "#FFFFFF",
+    "& label.MuiInputLabel-root": {
+      color: "white",
+      borderBottomColor: "white"
+
     },
+    "& .MuiInput-underline:before": {
+      borderBottomColor: "white"
+    },
+
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "white"
+    },
+  },
 
   placement: {
     display: 'flex',
@@ -22,27 +36,45 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     height: '75vh',
   },
-
-  iconButton: {
-    padding: 10,
-    float: "left",
-
-  },
-
-  searchArea: {
-    float: "right",
-    width: 450,
-    marginTop: 0
-
-  },
   container: {
     textAlign: 'center',
     width: '50%',
-    padding: '0 70px'
+    padding: '100px 0px 0px 100px',
   },
   heading: {
-    fontSize: '3rem'
-  }
+    fontSize: '3.7rem'
+  },
+  searchContainer: {
+    textAlign: 'center',
+    width: '40%',
+    padding: '100px 100px 0px 50px',
+  },
+  searchIcon: {
+    float: "left",
+    color: 'white'
+
+  },
+  searchArea: {
+    float: "right",
+    width: 450,
+    marginTop: 0,
+  }, 
+
+  tag: {
+    height: 33,
+    position: "relative",
+    zIndex: 0,
+    fontSize: 14,
+    backgroundColor: 'white',
+    "& .MuiChip-label": {
+      color: "#572CBF",
+    },
+    "& .MuiChip-deleteIcon": {
+      color: "#572CBF",
+    },
+  },
+
+
 }));
 
 export function Homepage() {
@@ -51,38 +83,44 @@ export function Homepage() {
   return (
     <div className={classes.placement}>
       <div className={classes.container}>
-        <h1 className={classes.heading}>Make learning easier with Launchpad now</h1>
+        <h1 className={classes.heading}>Make learning easier with launchpad now.</h1>
+        <h2>Find helpful resources, rated by the community.</h2>
       </div>
-      <div className={classes.container}>
-        Put search bar here :)
-      </div>
-
-      {/* <div className={classes.root}>
-        <IconButton className={classes.iconButton} aria-label="menu">
-            <SearchIcon />
-          </IconButton>
+      <div className={classes.searchContainer}>
+        <IconButton className={classes.searchIcon} aria-label="menu">
+          <SearchIcon />
+        </IconButton>
         <div className={classes.searchArea}>
           <Autocomplete
             multiple
-            id="tags-outlined"
+            id="tags-standard"
+            className={classes.root}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => (
+                <Chip
+                classes={{
+                  root: classNames(classes.tag)
+                }}
+                variant="outlined"
+                label={`${option.title}`}
+                {...getTagProps({ index })}
+                
+                />
+              ))
+            }
             options={subjectList}
             getOptionLabel={(option) => option.title}
-            // defaultValue={[subjectList[5]]}
-            
             filterSelectedOptions
+            noOptionsText="Please select one of the dropdown options"
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Search for resources"
-                placeholder="Selected"
+                label="Search by subject or resource type"   
               />
             )}
-
           />
-
         </div>
-      </div> */}
-
+      </div>
     </div>
   );
 }
