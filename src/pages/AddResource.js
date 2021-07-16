@@ -14,6 +14,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import MenuItem from "@material-ui/core/MenuItem";
 import { Typography, Slider, Tooltip } from '@material-ui/core';
+import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 
 const useStyles = makeStyles((theme) => ({
   placement: {
@@ -73,6 +74,8 @@ const marks = [
   }
 ];
 
+const filter = createFilterOptions();
+
 export function AddResource() {
   const classes = useStyles();
   const [resourceName, setResourceName] = useState("");
@@ -88,16 +91,20 @@ export function AddResource() {
                                         "difficulty": "", 
                                         "reliability": "" })
 
-  useEffect(() => {
-    console.log(rating)
-  }, [rating])
+  // useEffect(() => {
+  //   console.log(categories)
+  // }, [categories])
 
   // define the callAPI function that takes a first name and last name as parameters
   async function handleSubmit (event) {
     event.preventDefault();
-    console.log("hello");
     if (resourceType === "Other" && userResourceType !== "") {
-      setResourceType(userResourceType)
+      await setResourceType(userResourceType)
+    }
+
+    const uploadCategories = []
+    for (let i = 0; i < categories.length; i++) {
+      uploadCategories.push(categories[i]['inputValue'])
     }
 
     // instantiate a headers object
@@ -111,7 +118,7 @@ export function AddResource() {
       location: resourceLink,
       description: description,
       review: resourceReview,
-      categories: categories,
+      categories: uploadCategories,
       rating: rating
     });
     // create a JSON object with parameters for API call and store in a variable
@@ -210,16 +217,49 @@ export function AddResource() {
               autoFocus
               onChange={(e) => setResourceReview(e.target.value)}
             />
-            <TextField
-              variant="outlined"
+            <Autocomplete
               margin="normal"
-              multiline
               fullWidth
               id="categories"
               label="Add tags"
               name="categories"
+              multiple
+              options={resourceTags}
+              getOptionLabel={(option) => {
+                // Value selected with enter, right from the input
+                if (typeof option === "string") {
+                  return option;
+                }
+                // Add "xxx" option created dynamically
+                if (option.inputValue) {
+                  return option.inputValue;
+                }
+                // Regular option
+                return option.title;
+              }}
+              filterOptions={(options, params) => {
+                const filtered = filter(options, params);
+                // Suggest the creation of a new value
+                if (params.inputValue !== "") {
+                  filtered.push({
+                    inputValue: params.inputValue,
+                    title: `Add "${params.inputValue}"`
+                  });
+                }
+      
+                return filtered;
+              }}
               autoFocus
-              onChange={(e) => setCategories(e.target.value)}
+              filterSelectedOptions
+              renderOption={(option) => option.title}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  label="Add tags"
+                />
+              )}
+              onChange={(e, val) => setCategories(val)}
             />
             <h2>Rating:</h2>
             <Typography gutterBottom>Overall</Typography>
@@ -273,3 +313,13 @@ export function AddResource() {
     </Container>
   );
 }
+
+
+// options we currently have for tags
+const resourceTags = [
+  { title: "Coding", inputValue: "Coding" },
+  { title: "Mathematics", inputValue: "Mathematics"  },
+  { title: "Business", inputValue: "Business"  },
+  { title: "Cooking", inputValue: "Cooking"  },
+  { title: "Photography", inputValue: "Photography"  }
+]
