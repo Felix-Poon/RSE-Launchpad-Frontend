@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '75vh',
   },
   container: {
     width: '50%',
@@ -34,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    height: '100%',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -84,17 +84,17 @@ const marks = [
 
 const filter = createFilterOptions();
 
-export function RateResource() {
+export function RateResource(props) {
   const classes = useStyles();
+
   const [rating, setRating] = useState({
-                                        "understanding": "", 
-                                        "difficulty": "", 
-                                        "reliability": "" })
+                                        "understanding": "3", 
+                                        "difficulty": "3", 
+                                        "reliability": "3" })
 
   // define the callAPI function that takes a first name and last name as parameters
   async function handleSubmit (event) {
     event.preventDefault();
-
 
     // instantiate a headers object
     var myHeaders = new Headers();
@@ -102,10 +102,7 @@ export function RateResource() {
     myHeaders.append("Content-Type", "application/json");
     // using built in JSON utility package turn object to string and store in a variable
     var raw = JSON.stringify ({
-      understanding: understanding,
-      difficulty: difficulty,
-      reliability: reliability,
-
+        rating: rating,
     });
     // create a JSON object with parameters for API call and store in a variable
     var requestOptions = {
@@ -125,7 +122,7 @@ export function RateResource() {
         <div className={classes.paper}>
           <h1>Give your own rating: </h1>
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
-            <h2 className={classes.resourceDisplay}>TITLE </h2>
+            <h2 className={classes.resourceDisplay}>TITLE</h2>
             <h4 className={classes.resourceDisplay}>URL LINK </h4>
             <h4 className={classes.resourceDisplay}>Type of Resource </h4>
             <h4 className={classes.resourceDisplay}>Original Submitter's Description </h4>
@@ -135,27 +132,27 @@ export function RateResource() {
             <Slider
               ValueLabelComponent={ValueLabelComponent}
               aria-label="custom thumb label"
-              defaultValue={5}
+              defaultValue={3}
               min = {0}
-              max={10}
+              max={5}
               onChange = {(e, val) => setRating({...rating, "understanding": `${val}`})}
             />
             <Typography gutterBottom>Level of difficulty</Typography>
             <Slider
               ValueLabelComponent={ValueLabelComponent}
               aria-label="custom thumb label"
-              defaultValue={5}
+              defaultValue={3}
               min = {0}
-              max={10}
+              max={5}
               onChange = {(e, val) => setRating({...rating, "difficulty": `${val}`})}
             />
             <Typography gutterBottom>Reliability</Typography>
             <Slider
               ValueLabelComponent={ValueLabelComponent}
               aria-label="custom thumb label"
-              defaultValue={5}
+              defaultValue={3}
               min = {0}
-              max={10}
+              max={5}
               onChange = {(e, val) => setRating({...rating, "reliability": `${val}`})}
             />
             <Button

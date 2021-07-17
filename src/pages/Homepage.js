@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import { Container } from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
-// import classNames from "classnames";
+import classNames from "classnames";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,32 +32,31 @@ const useStyles = makeStyles((theme) => ({
 
   placement: {
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '75vh',
+    height: '100%',
+    flexWrap: 'wrap',
   },
-  container: {
-    textAlign: 'center',
-    width: '50%',
-    padding: '100px 0px 0px 100px',
+
+  textContainer: {
+    width: '40%',
+    padding: '10% 0% 0% 5%',
+
   },
   heading: {
-    fontSize: '3.7rem'
+    fontSize: '3.7rem',
   },
   searchContainer: {
     textAlign: 'center',
-    width: '40%',
-    padding: '100px 100px 0px 50px',
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    padding: '15% 0px 100px 50px',
+    width: '50%',
   },
   searchIcon: {
-    float: "left",
     color: 'white'
-
   },
-  searchArea: {
-    float: "right",
-    width: 450,
-    marginTop: 0,
+  searchBarArea: {
+    width: '60%',
   }, 
 
   tag: {
@@ -82,7 +81,7 @@ export function Homepage() {
 
   return (
     <div className={classes.placement}>
-      <div className={classes.container}>
+      <div className={classes.textContainer}>
         <h1 className={classes.heading}>Make learning easier with launchpad now.</h1>
         <h2>Find helpful resources, rated by the community.</h2>
       </div>
@@ -90,24 +89,24 @@ export function Homepage() {
         <IconButton className={classes.searchIcon} aria-label="menu">
           <SearchIcon />
         </IconButton>
-        <div className={classes.searchArea}>
+        <div className={classes.searchBarArea}>
           <Autocomplete
             multiple
             id="tags-standard"
             className={classes.root}
-            // renderTags={(value, getTagProps) =>
-            //   value.map((option, index) => (
-            //     <Chip
-            //     classes={{
-            //       root: classNames(classes.tag)
-            //     }}
-            //     variant="outlined"
-            //     label={`${option.title}`}
-            //     {...getTagProps({ index })}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => (
+                <Chip
+                classes={{
+                  root: classNames(classes.tag)
+                }}
+                variant="outlined"
+                label={`${option.title}`}
+                {...getTagProps({ index })}
                 
-            //     />
-            //   ))
-            // }
+                />
+              ))
+            }
             options={subjectList}
             getOptionLabel={(option) => option.title}
             filterSelectedOptions
