@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
     },
     "& .MuiInput-input": {
       color: 'white'
+    },
+    "& .MuiSvgIcon-root": {
+      color:'white'
     }
   },
 
