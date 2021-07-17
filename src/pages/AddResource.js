@@ -308,23 +308,23 @@ export function AddResource() {
               onChange = {(e, val) => setRating({...rating, "reliability": `${val}`})}
               />
             <div>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                    fullWidth
-                    style={{margin: '25px 0 0 0', fontSize: '1.25rem'}}
-                  >
-                    Add Resource
-                    <Icon path={mdiRocketOutline}
-                      size={1.5}
-                      color="white"
-                      rotate='90'
-                      style={{margin: '0 0 0 10px'}}
-                    />
-                  </Button>
-                </div>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  fullWidth
+                  style={{margin: '25px 0 0 0', fontSize: '1.25rem'}}
+                >
+                  Add Resource
+                  <Icon path={mdiRocketOutline}
+                    size={1.5}
+                    color="white"
+                    rotate='90'
+                    style={{margin: '0 0 0 10px'}}
+                  />
+                </Button>
+              </div>
           </form>
         </div>
       </Box>
