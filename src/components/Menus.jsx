@@ -3,6 +3,9 @@ import PostAddIcon from '@material-ui/icons/PostAdd';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import { Auth } from 'aws-amplify';
+import { UserContext } from './UserContext';
+import { useHistory } from 'react-router-dom';
 
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
@@ -73,6 +76,12 @@ export function LogoutMenu() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
+  const context = React.useContext(UserContext);
+  let [usernameToken, setUsernameToken] = context;
+  if (usernameToken === '' && localStorage.getItem('userName')) {
+    usernameToken = localStorage.getItem('userName')
+  }
+  const history = useHistory();
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -90,6 +99,17 @@ export function LogoutMenu() {
     if (event.key === 'Tab') {
       event.preventDefault();
       setOpen(false);
+    }
+  }
+
+  async function handleLogout() {
+    try {
+        await Auth.signOut();
+        localStorage.removeItem('userName');
+        setUsernameToken('');
+        history.push('/')
+    } catch (error) {
+        console.log('error signing out: ', error);
     }
   }
 
@@ -136,7 +156,7 @@ export function LogoutMenu() {
                     <MenuItem onClick={handleClose} className={classes.menuItem}>Your ratings</MenuItem>
                     <MenuItem onClick={handleClose} className={classes.menuItem}>Account settings</MenuItem>
                     <hr style={{borderColor:'lightgrey', borderBottom: 0}}/>
-                    <MenuItem onClick={handleClose} className={classes.menuItem}>Log Out</MenuItem>
+                    <MenuItem onClick={handleLogout} className={classes.menuItem}>Log Out</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
