@@ -15,6 +15,8 @@ import Link from '@material-ui/core/Link';
 import MenuItem from "@material-ui/core/MenuItem";
 import { Typography, Slider, Tooltip } from '@material-ui/core';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
+import Icon from '@mdi/react'
+import { mdiRocketOutline } from '@mdi/js';
 
 const useStyles = makeStyles((theme) => ({
   placement: {
@@ -28,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
     padding: '0 90px',
   },
   heading: {
-    fontSize: '3rem'
+    /* fontSize: '3rem' */
+    fontSize: '4vw',
   },
   paper: {
     display: 'flex',
@@ -42,6 +45,11 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    textTransform: 'none',
+    fontFamily: 'Poppins, sans-serif',
+    fontWeight: 600,
+    margin: '10px 0 0 0',
+    fontSize: '1.25rem',
   },
 }));
 
@@ -299,15 +307,24 @@ export function AddResource() {
               max={10}
               onChange = {(e, val) => setRating({...rating, "reliability": `${val}`})}
               />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              >
-              Add resource
-            </Button>
+            <div>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    fullWidth
+                    style={{margin: '25px 0 0 0', fontSize: '1.25rem'}}
+                  >
+                    Add Resource
+                    <Icon path={mdiRocketOutline}
+                      size={1.5}
+                      color="white"
+                      rotate='90'
+                      style={{margin: '0 0 0 10px'}}
+                    />
+                  </Button>
+                </div>
           </form>
         </div>
       </Box>
