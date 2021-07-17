@@ -73,6 +73,7 @@ const useStyles = makeStyles((theme) => ({
   },
   searchBtn: {
     margin: '0 0 0 10px',
+    backgroundColor: 'rgb(255,255,255,0.1)',
   },
   disabledSearchBtn: {
     width: 0,
@@ -121,6 +122,7 @@ export function Search() {
 
   // Creates query & redirects to search results
   function handleSearch(event) {
+    event.preventDefault();
     console.log('click', event)
     const query = searchQuery(searchValue)
     console.log(query)

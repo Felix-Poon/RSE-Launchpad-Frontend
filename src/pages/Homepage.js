@@ -75,6 +75,7 @@ const useStyles = makeStyles((theme) => ({
   },
   searchBtn: {
     margin: '0 0 0 10px',
+    backgroundColor: 'rgb(255,255,255,0.1)',
   },
   disabledSearchBtn: {
     width: 0,
