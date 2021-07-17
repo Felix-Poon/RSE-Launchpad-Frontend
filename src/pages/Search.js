@@ -77,8 +77,23 @@ export function Search() {
   // Make array from URL path
   const path = location.pathname.split('/').pop()
   const searchArr = path.split('&')
+
+  const tags = [];
+
+  const def = JSON.parse(
+    '{"title": "Art"}'
+  )
   
+  searchArr.forEach(label => {
+    tags.push({title:label})
+  })
+
+
+  //defaultValue={[{title:"Art"}]}
+  console.log(tags)
+
   console.log(searchArr)
+  
 
   return(
     <div className={classes.root}>
@@ -93,6 +108,7 @@ export function Search() {
               multiple
               id="tags-standard"
               className={classes.root}
+              value={tags}
               renderTags={(value, getTagProps) =>
                 value.map((option, index) => (
                   <Chip
@@ -101,8 +117,7 @@ export function Search() {
                   }}
                   variant="outlined"
                   label={`${option.title}`}
-                  {...getTagProps({ index })}
-                  
+                  {...getTagProps({ index })}  
                   />
                 ))
               }
