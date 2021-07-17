@@ -1,6 +1,7 @@
 import React from 'react';
 import { SearchCard } from '../components/SearchCard';
 import { makeStyles } from '@material-ui/core/styles';
+import { useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -10,6 +11,14 @@ const useStyles = makeStyles((theme) => ({
 
 export function Search() {
   const classes = useStyles();
+  const location = useLocation();
+
+  // Make array from URL path
+  const path = location.pathname.split('/').pop()
+  const searchArr = path.split('&')
+  
+  console.log(searchArr)
+
   return(
     <div className={classes.root}>
       <div>
