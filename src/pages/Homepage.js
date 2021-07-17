@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiInput-underline:after": {
       borderBottomColor: "white"
     },
+    "& .MuiInput-input": {
+      color: 'white'
+    }
   },
 
   placement: {
@@ -53,7 +56,8 @@ const useStyles = makeStyles((theme) => ({
     width: '50%',
   },
   searchIcon: {
-    color: 'white'
+    color: 'white',
+    margin: '20px 0 0 0'
   },
   searchBarArea: {
     width: '60%',
@@ -73,6 +77,11 @@ const useStyles = makeStyles((theme) => ({
   },
   subtitle: {
     fontSize: '2.5vh',
+  },
+  label: {
+    fontFamily: 'Poppins, sans-serif',
+    /* padding: '0 0 10px 0',
+    margin: '0 0 100px 0', */
   }
 
 }));
@@ -117,7 +126,7 @@ export function Homepage() {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Search by subject or resource type"   
+                label={<div className={classes.label}>Search by subject or resource type</div>}
               />
             )}
           />
