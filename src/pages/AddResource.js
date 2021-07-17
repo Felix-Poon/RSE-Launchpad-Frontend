@@ -15,6 +15,7 @@ import Link from '@material-ui/core/Link';
 import MenuItem from "@material-ui/core/MenuItem";
 import { Typography, Slider, Tooltip } from '@material-ui/core';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   placement: {
@@ -77,6 +78,7 @@ const filter = createFilterOptions();
 
 export function AddResource() {
   const classes = useStyles();
+  const history = useHistory();
   const [resourceName, setResourceName] = useState("");
   const [categories, setCategories] = useState([]);
   const [description, setDescription] = useState("");
@@ -85,10 +87,13 @@ export function AddResource() {
   const [userResourceType, setUserResourceType] = useState("");
   const [resourceReview, setResourceReview] = useState("");
   const [rating, setRating] = useState({
-                                        "overall": "",
-                                        "understanding": "", 
-                                        "difficulty": "", 
-                                        "reliability": "" })
+                                        "overall": "5",
+                                        "understanding": "5", 
+                                        "difficulty": "5", 
+                                        "reliability": "5" });
+  const author = localStorage.getItem('userName');
+  
+  // console.log("author:", author)
 
   // useEffect(() => {
   //   console.log(categories)
@@ -118,8 +123,11 @@ export function AddResource() {
       description: description,
       review: resourceReview,
       categories: uploadCategories,
-      rating: rating
+      rating: rating,
+      author: author
     });
+
+    console.log(raw);
     // create a JSON object with parameters for API call and store in a variable
     var requestOptions = {
         method: 'POST',
@@ -128,8 +136,18 @@ export function AddResource() {
         redirect: 'follow'
     };
     // make API call with parameters and use promises to get response
-    const response = await fetch("https://ggvpaganoj.execute-api.ap-southeast-2.amazonaws.com/Development/resource", requestOptions)
-    console.log(response);
+    try{
+      const response = await fetch("https://ggvpaganoj.execute-api.ap-southeast-2.amazonaws.com/Development/resource", requestOptions)
+      console.log(response);
+      if (response['status'] === 200){
+        history.push('/user/resources')
+      } else {
+        console.log(response)
+      }
+    } catch (error) {
+      alert('error: ', error)
+    }
+
   }
 
   return (
