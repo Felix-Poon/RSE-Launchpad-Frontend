@@ -18,14 +18,13 @@ import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete
 
 const useStyles = makeStyles((theme) => ({
   placement: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '75vh',
+    display: 'block',
+    overflow: 'auto',
+
   },
   container: {
     /* textAlign: 'center', */
-    width: '50%',
+    width: '100%',
     padding: '0 90px',
   },
   heading: {
@@ -134,6 +133,8 @@ export function AddResource() {
   }
 
   return (
+    <div className={classes.placement}>
+
     <Container maxWidth='sm'>
       <Box bgcolor='white' color="black" className='box-generic'>
         <div className={classes.paper}>
@@ -149,7 +150,7 @@ export function AddResource() {
               name="title"
               autoFocus
               onChange={(e) => setResourceName(e.target.value)}
-            />
+              />
             <TextField 
               id="resourceType" 
               label="Type of Resource" 
@@ -160,7 +161,7 @@ export function AddResource() {
               required
               margin="normal"
               onChange = {(e) => setResourceType(e.target.value)}
-            >
+              >
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
@@ -172,16 +173,16 @@ export function AddResource() {
             </TextField>
             {resourceType === "Other" && (
               <TextField
-                id="userResourceType"
-                label="Tell us the resource type?"
-                name="userResourceType"
-                fullWidth
-                variant="outlined"
-                margin="normal"
-                value={userResourceType}
-                onChange={(e) => setUserResourceType(e.target.value)}
+              id="userResourceType"
+              label="Tell us the resource type?"
+              name="userResourceType"
+              fullWidth
+              variant="outlined"
+              margin="normal"
+              value={userResourceType}
+              onChange={(e) => setUserResourceType(e.target.value)}
               />
-            )}
+              )}
             <TextField
               variant="outlined"
               margin="normal"
@@ -192,7 +193,7 @@ export function AddResource() {
               name="resourceLink"
               autoFocus
               onChange={(e) => setResourceLink(e.target.value)}
-            />
+              />
             <TextField
               variant="outlined"
               margin="normal"
@@ -204,7 +205,7 @@ export function AddResource() {
               name="description"
               autoFocus
               onChange={(e) => setDescription(e.target.value)}
-            />
+              />
             <TextField
               variant="outlined"
               margin="normal"
@@ -216,7 +217,7 @@ export function AddResource() {
               name="review"
               autoFocus
               onChange={(e) => setResourceReview(e.target.value)}
-            />
+              />
             <Autocomplete
               margin="normal"
               fullWidth
@@ -246,7 +247,7 @@ export function AddResource() {
                     title: `Add "${params.inputValue}"`
                   });
                 }
-      
+                
                 return filtered;
               }}
               autoFocus
@@ -254,13 +255,13 @@ export function AddResource() {
               renderOption={(option) => option.title}
               renderInput={(params) => (
                 <TextField
-                  {...params}
-                  variant="outlined"
-                  label="Add tags"
+                {...params}
+                variant="outlined"
+                label="Add tags"
                 />
-              )}
-              onChange={(e, val) => setCategories(val)}
-            />
+                )}
+                onChange={(e, val) => setCategories(val)}
+                />
             <h2>Rating:</h2>
             <Typography gutterBottom>Overall</Typography>
             <Slider
@@ -270,7 +271,7 @@ export function AddResource() {
               min = {0}
               max={10}
               onChange = {(e, val) => setRating({...rating, "overall": `${val}`})}
-            />
+              />
             <Typography gutterBottom>Ease of Understanding</Typography>
             <Slider
               ValueLabelComponent={ValueLabelComponent}
@@ -279,7 +280,7 @@ export function AddResource() {
               min = {0}
               max={10}
               onChange = {(e, val) => setRating({...rating, "understanding": `${val}`})}
-            />
+              />
             <Typography gutterBottom>Level of difficulty</Typography>
             <Slider
               ValueLabelComponent={ValueLabelComponent}
@@ -288,7 +289,7 @@ export function AddResource() {
               min = {0}
               max={10}
               onChange = {(e, val) => setRating({...rating, "difficulty": `${val}`})}
-            />
+              />
             <Typography gutterBottom>Reliability</Typography>
             <Slider
               ValueLabelComponent={ValueLabelComponent}
@@ -297,20 +298,21 @@ export function AddResource() {
               min = {0}
               max={10}
               onChange = {(e, val) => setRating({...rating, "reliability": `${val}`})}
-            />
+              />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
-            >
+              >
               Add resource
             </Button>
           </form>
         </div>
       </Box>
     </Container>
+    </div>
   );
 }
 

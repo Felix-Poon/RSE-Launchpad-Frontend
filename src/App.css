@@ -43,17 +43,19 @@
 }
 
 body, html {
-  background: rgb(63,57,202);
   background: linear-gradient(0deg, rgba(63,57,202,1) 0%, rgba(139,7,189,1) 100%);
   color: white;
   background-repeat: no-repeat;
-  min-height: 100%;
+  height: 100%;
   font-family: 'Poppins', sans-serif;
   margin:0;
 }
 
 body {
   padding: 10px 20px;
+  margin: 0;
+  position: relative;
+  height: auto;
   min-height: 100%;
 }
 
