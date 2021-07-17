@@ -43,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  urlLinkDisplay: {
+      textAlign: 'left',
+  }
 }));
 
 function ValueLabelComponent(props) {
@@ -138,10 +141,11 @@ export function EditResource() {
     <Container maxWidth='sm'>
       <Box bgcolor='white' color="black" className='box-generic'>
         <div className={classes.paper}>
-          <h1>Add your own resource: </h1>
+          <h1>Edit your resource below: </h1>
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
+              defaultValue="Original TITLE"
               margin="normal"
               required
               fullWidth
@@ -151,6 +155,7 @@ export function EditResource() {
               autoFocus
               onChange={(e) => setResourceName(e.target.value)}
               />
+            <h4 className={classes.urlLinkDisplay}>URL LINK GOES HERE </h4>
             <TextField 
               id="resourceType" 
               label="Type of Resource" 
@@ -184,17 +189,7 @@ export function EditResource() {
               />
               )}
             <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="resourceLink"
-              label="Link to resource"
-              name="resourceLink"
-              autoFocus
-              onChange={(e) => setResourceLink(e.target.value)}
-              />
-            <TextField
+              defaultValue="Original Description"
               variant="outlined"
               margin="normal"
               multiline
@@ -207,6 +202,7 @@ export function EditResource() {
               onChange={(e) => setDescription(e.target.value)}
               />
             <TextField
+              defaultValue="Original Review"
               variant="outlined"
               margin="normal"
               multiline
@@ -219,6 +215,7 @@ export function EditResource() {
               onChange={(e) => setResourceReview(e.target.value)}
               />
             <Autocomplete
+              defaultValue={[resourceTags[4]]}
               margin="normal"
               fullWidth
               id="categories"
@@ -263,40 +260,31 @@ export function EditResource() {
                 onChange={(e, val) => setCategories(val)}
                 />
             <h2>Rating:</h2>
-            <Typography gutterBottom>Overall</Typography>
-            <Slider
-              ValueLabelComponent={ValueLabelComponent}
-              aria-label="custom thumb label"
-              defaultValue={5}
-              min = {0}
-              max={10}
-              onChange = {(e, val) => setRating({...rating, "overall": `${val}`})}
-              />
             <Typography gutterBottom>Ease of Understanding</Typography>
             <Slider
               ValueLabelComponent={ValueLabelComponent}
               aria-label="custom thumb label"
-              defaultValue={5}
-              min = {0}
-              max={10}
+              defaultValue={3}
+              min = {1}
+              max={5}
               onChange = {(e, val) => setRating({...rating, "understanding": `${val}`})}
               />
             <Typography gutterBottom>Level of difficulty</Typography>
             <Slider
               ValueLabelComponent={ValueLabelComponent}
               aria-label="custom thumb label"
-              defaultValue={5}
-              min = {0}
-              max={10}
+              defaultValue={3}
+              min = {1}
+              max={5}
               onChange = {(e, val) => setRating({...rating, "difficulty": `${val}`})}
               />
             <Typography gutterBottom>Reliability</Typography>
             <Slider
               ValueLabelComponent={ValueLabelComponent}
               aria-label="custom thumb label"
-              defaultValue={5}
-              min = {0}
-              max={10}
+              defaultValue={3}
+              min = {1}
+              max={5}
               onChange = {(e, val) => setRating({...rating, "reliability": `${val}`})}
               />
             <Button
@@ -306,7 +294,7 @@ export function EditResource() {
               color="primary"
               className={classes.submit}
               >
-              Add resource
+              Update
             </Button>
           </form>
         </div>
