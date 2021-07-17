@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
   textContainer: {
     width: '40%',
-    padding: '10% 0% 0% 5%',
+    padding: '7% 0% 0% 5%',
     [theme.breakpoints.down('sm')]: {
       width: '100%'
     },
@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     display: 'flex',
-    padding: '15% 0px 100px 60px',
+    padding: '12% 0px 100px 10%',
     /* width: '40%' */
     width: '400px'
   },
@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
     width: 0,
   },
   searchBarArea: {
-    width: '320px',
+    width: '100%',
   }, 
   tag: {
     height: 33,
@@ -153,20 +153,40 @@ export function Homepage() {
                   variant="outlined"
                   label={`${option.title}`}
                   {...getTagProps({ index })}
-                  
                   />
                 ))
               }
               options={subjectList}
-              getOptionLabel={(option) => option.title}
+              getOptionLabel={(option) => {
+                // Value selected with enter, right from the input
+                if (typeof option === "string") {
+                  return option;
+                }
+                // Add "xxx" option created dynamically
+                if (option.inputValue) {
+                  return option.inputValue;
+                }
+                // Regular option
+                return option.title;
+              }}
               filterSelectedOptions
-              noOptionsText="Please select one of the dropdown options"
               renderInput={(params) => (
                 <TextField
                   {...params}
                   label={<div className={classes.label}>Search by subject or resource type</div>}
                 />
               )}
+              filterOptions={(options, params) => {
+                const filtered = filter(options, params);
+                // Suggest the creation of a new value
+                if (params.inputValue !== "") {
+                  filtered.push({
+                    inputValue: params.inputValue,
+                    title: `${params.inputValue}`
+                  });
+                }
+                return filtered;
+              }}
               onChange={(event, value) => setSearchValue(value)}
             />
           </div>
@@ -180,7 +200,6 @@ export function Homepage() {
               color="white"/>
           </IconButton>
         </div>
-        
       </div>
     </div>
   );
