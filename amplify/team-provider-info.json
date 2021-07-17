@@ -14,12 +14,7 @@
     "categories": {
       "auth": {
         "rselaunchpadfrontendb53929d1": {},
-        "rselaunchpadfrontend": {
-          "userPoolId": "ap-southeast-2_XUOMtvZUd",
-          "userPoolName": "RSELaunchPadUserPool",
-          "webClientId": "41d7fdsrlp9smraoiptpm7u7u3",
-          "nativeClientId": "41d7fdsrlp9smraoiptpm7u7u3"
-        }
+        "rselaunchpadfrontendaff07c4f": {}
       }
     }
   }

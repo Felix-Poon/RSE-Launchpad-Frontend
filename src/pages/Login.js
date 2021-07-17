@@ -15,6 +15,9 @@ import Link from '@material-ui/core/Link';
 
 import Grid from '@material-ui/core/Grid';
 import { mdiRocketOutline } from '@mdi/js';
+import { useHistory } from 'react-router-dom';
+import { Auth } from 'aws-amplify';
+import { UserContext } from '../components/UserContext';
 
 const useStyles = makeStyles((theme) => ({
   placement: {
@@ -66,8 +69,15 @@ export function Login() {
   const [email, setEmail] = React.useState("");
   const [error, setError] = React.useState(false);
   const [password, setPassword] = React.useState("");
+  const [username, setUsername] = React.useState("");
   const [validEmail, setValidEmail] = React.useState(false);
   const [existingUser, setExistingUser] = React.useState(null);
+  const history = useHistory();
+  const context = React.useContext(UserContext);
+  let [usernameToken, setUsernameToken] = context;
+  if (usernameToken === '' && localStorage.getItem('userName')) {
+    usernameToken = localStorage.getItem('userName')
+  }
 
   let emailError = error ? "Invalid email" : "Email";
   let passwordError = error ? "Incorrect password" : "Password";
@@ -144,6 +154,19 @@ export function Login() {
     </div>
   );
 
+  async function signIn(event) {
+    event.preventDefault();
+    try {
+        const user = await Auth.signIn(username, password);
+        // console.log(user);
+        localStorage.setItem('userName', user['username']);
+        setUsernameToken(user['username'])
+        history.push('/');
+    } catch (error) {
+        alert('error signing in', error);
+    }
+  }
+
   return(
     <div className={classes.placement}>
       <div className={classes.container}>
@@ -158,17 +181,19 @@ export function Login() {
         <Container maxWidth='sm'>
           <Box bgcolor='white' color="black" className='box-generic'>
           <div className={classes.paper}>
-              <form className={classes.form} noValidate>
+              <form className={classes.form} noValidate onSubmit={signIn}>
                 <TextField
                   variant="outlined"
                   margin="normal"
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Username"
                   name="email"
                   autoComplete="email"
                   autoFocus
+                  value={username}
+                  onChange = {(e) => setUsername(e.target.value)}
                 />
                 <TextField
                   variant="outlined"
@@ -180,6 +205,8 @@ export function Login() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  value={password}
+                  onChange = {(e) => setPassword(e.target.value)}
                 />
                 <div style={{display: 'flex', flexDirection: 'row'}}>
                   <FormControlLabel

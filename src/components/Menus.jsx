@@ -3,6 +3,9 @@ import PostAddIcon from '@material-ui/icons/PostAdd';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import { Auth } from 'aws-amplify';
+import { UserContext } from './UserContext';
+import { useHistory } from 'react-router-dom';
 
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
@@ -73,6 +76,12 @@ export function LogoutMenu() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
+  const context = React.useContext(UserContext);
+  let [usernameToken, setUsernameToken] = context;
+  if (usernameToken === '' && localStorage.getItem('userName')) {
+    usernameToken = localStorage.getItem('userName')
+  }
+  const history = useHistory();
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -93,6 +102,17 @@ export function LogoutMenu() {
     }
   }
 
+  async function handleLogout() {
+    try {
+        await Auth.signOut();
+        localStorage.removeItem('userName');
+        setUsernameToken('');
+        history.push('/')
+    } catch (error) {
+        console.log('error signing out: ', error);
+    }
+  }
+
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
   React.useEffect(() => {
@@ -106,7 +126,7 @@ export function LogoutMenu() {
   return(
     <div>
       <div>
-        <Link>
+        <Link to="/add_resource">
           <Button className={classes.clearBtn}>
             <PostAddIcon style={{margin:'0 5px'}}/>
             <h4>Add resource</h4>
@@ -136,7 +156,7 @@ export function LogoutMenu() {
                     <MenuItem onClick={handleClose} className={classes.menuItem}>Your ratings</MenuItem>
                     <MenuItem onClick={handleClose} className={classes.menuItem}>Account settings</MenuItem>
                     <hr style={{borderColor:'lightgrey', borderBottom: 0}}/>
-                    <MenuItem onClick={handleClose} className={classes.menuItem}>Log Out</MenuItem>
+                    <MenuItem onClick={handleLogout} className={classes.menuItem}>Log Out</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

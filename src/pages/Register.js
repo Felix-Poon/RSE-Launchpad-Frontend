@@ -17,6 +17,8 @@ import { Auth } from 'aws-amplify';
 import { mdiRocketOutline } from '@mdi/js';
 import Icon from '@mdi/react'
 
+import { UserContext } from '../components/UserContext';
+
 const useStyles = makeStyles((theme) => ({
   placement: {
     display: 'flex',
@@ -64,6 +66,11 @@ export function Register() {
   const [getConfirm, setGetConfirm] = React.useState(false);
   const [confCode, setConfCode] = React.useState("");
   const history = useHistory();
+  const context = React.useContext(UserContext);
+  const [usernameToken, setUsernameToken] = context
+  if (usernameToken === '' && localStorage.getItem('userName')) {
+    usernameToken = localStorage.getItem('userName')
+  }
 
   async function signUp() {
     try {
@@ -75,13 +82,15 @@ export function Register() {
             }
         });
         setGetConfirm(true)
-        console.log(user)
+        setUsernameToken(user['username'])
+        localStorage.setItem('userName', user['username']);
+        // console.log(user)
     } catch (error) {
-        console.log('error signing up:', error);
+        alert('error signing up:', error);
     }
   }
 
-
+  // handle initial registration 
   async function handleSubmit (event) {
     event.preventDefault();
     setUsernameErr("");
@@ -99,6 +108,7 @@ export function Register() {
     signUp()
   }
 
+  // handle confirmation code
   async function handleConfirm (event) {
     event.preventDefault();
     try {

@@ -21,6 +21,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 }) */
 import { Search } from './pages/Search';
 import { UserResources } from './pages/UserResources';
+import  UserContext  from './components/UserContext';
 //import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -37,25 +38,26 @@ import { UserResources } from './pages/UserResources';
  */
 function App() {
   return (
-    <Router>
-      <div>
-        <Header />
-        {/* <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/register">Register</Link>
-            </li>
-            <li>
-              <Link to="/add_resource">Add Resource</Link>
-            </li>
-          </ul>
-        </nav> */}
+    <UserContext>
+      <Router>
+        <div>
+          <Header />
+          {/* <nav>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/register">Register</Link>
+              </li>
+              <li>
+                <Link to="/add_resource">Add Resource</Link>
+              </li>
+            </ul>
+          </nav> */}
 
         <Switch>
           {/* ADD MORE PAGES HERE */}
@@ -86,6 +88,8 @@ function App() {
         </Switch>
       </div>
     </Router>
+
+    </UserContext>
   );
 }
 

@@ -7,6 +7,8 @@ import { LoginMenu, LogoutMenu } from './Menus';
 import Icon from '@mdi/react'
 import { mdiRocketLaunch } from '@mdi/js';
 import { Link } from 'react-router-dom';
+import { Auth } from 'aws-amplify';
+import { UserContext } from './UserContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,13 +33,18 @@ const loginMenu = (<LoginMenu/>);
 const logoutMenu = (<LogoutMenu/>);
 
 
+
 // Put header here
 export function Header() {
   const classes = useStyles();
-  const [loggedIn, setLoggedIn] = React.useState(false);
-
+  const context = React.useContext(UserContext);
+  let [usernameToken, setUsernameToken] = context;
+  if (usernameToken === '' && localStorage.getItem('userName')) {
+    usernameToken = localStorage.getItem('userName')
+  }
+  
   /* Check if user logged in */
-  let menu = loggedIn ? logoutMenu : loginMenu;
+  let menu = usernameToken !== '' ? logoutMenu : loginMenu;
 
   return(
 
