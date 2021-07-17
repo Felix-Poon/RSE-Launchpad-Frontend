@@ -1,11 +1,9 @@
-/* eslint-disable no-use-before-define */
-import React from 'react';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import React from "react";
+import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
-import { Container } from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
 import classNames from "classnames";
 import { mdiRocket } from '@mdi/js';
@@ -18,6 +16,9 @@ import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    "& .MuiInputBase-input": {
+      color: 'white',
+    }, 
     "& label.Mui-focused": {
       color: "white",
       borderBottomColor: "white"
@@ -30,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiInput-underline:before": {
       borderBottomColor: "white"
     },
-
     "& .MuiInput-underline:after": {
       borderBottomColor: "white"
     },
@@ -105,6 +105,8 @@ const useStyles = makeStyles((theme) => ({
   }
 
 }));
+
+const filter = createFilterOptions();
 
 export function Homepage() {
   const classes = useStyles();
