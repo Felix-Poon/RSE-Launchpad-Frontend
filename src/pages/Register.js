@@ -12,6 +12,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 
+import { Auth } from 'aws-amplify';
 
 const useStyles = makeStyles((theme) => ({
   placement: {
@@ -46,15 +47,36 @@ export function Register() {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPass, setConfirmPass] = React.useState("");
+  const [email, setEmail] = React.useState("");
   const [usernameErr, setUsernameErr] = React.useState("");
   const [passwordErr, setPasswordErr] = React.useState("");
+  const [getConfirm, setGetConfirm] = React.useState(false);
+  const [confCode, setConfCode] = React.useState("");
 
-  function handleSubmit() {
+  async function signUp() {
+    try {
+        const { user } = await Auth.signUp({
+            username,
+            password,
+            attributes: {
+                email
+            }
+        });
+        setGetConfirm(true)
+        console.log(user)
+    } catch (error) {
+        console.log('error signing up:', error);
+    }
+  }
+
+
+  async function handleSubmit (event) {
+    event.preventDefault();
     setUsernameErr("");
     setPasswordErr("")
     if (ifEmpty(username)) {
       setUsernameErr("Invalid username");
-    }
+    } 
     if (ifEmpty(password) || ifEmpty(confirmPass)) {
       setPasswordErr("Enter password")
     }
@@ -62,8 +84,18 @@ export function Register() {
       setPasswordErr("Passwords must match");
     }
     /* USERNAME TAKEN ERR */
+    signUp()
   }
 
+  async function handleConfirm (event) {
+    event.preventDefault();
+    try {
+      const response = await Auth.confirmSignUp(username, confCode);
+      console.log(response);
+    } catch (error) {
+        console.log('error confirming sign up', error);
+    }
+  }
 
   return(
     <div className={classes.placement}>
@@ -76,85 +108,117 @@ export function Register() {
       <div className={classes.container}>
         <Container component="main" maxWidth="sm">
           <Box bgcolor='white' color="black" className='box-generic'>
-          <div className={classes.paper}>
-            <form className={classes.form} noValidate>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField
-                    autoComplete="fname"
-                    name="username"
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="username"
-                    label="Username"
-                    autoFocus
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    name="confirm password"
-                    label="Confirm Password"
-                    type="password"
-                    id="confirmPassword"
-                    autoComplete="current-password"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                    label="I want to receive inspiration, marketing promotions and updates via email."
-                    style={{textAlign:'left'}}
+          {getConfirm === false
+            ? <div className={classes.paper}>
+                <form className={classes.form} noValidate onSubmit={handleSubmit}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <TextField
+                        autoComplete="fname"
+                        name="username"
+                        variant="outlined"
+                        required
+                        fullWidth
+                        id="username"
+                        label="Username"
+                        autoFocus
+                        onChange =  {(e) => setUsername(e.target.value)}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        variant="outlined"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Email Address"
+                        name="email"
+                        autoComplete="email"
+                        onChange =  {(e) => setEmail(e.target.value)}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        variant="outlined"
+                        required
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        type="password"
+                        id="password"
+                        autoComplete="current-password"
+                        onChange =  {(e) => setPassword(e.target.value)}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        variant="outlined"
+                        required
+                        fullWidth
+                        name="confirm password"
+                        label="Confirm Password"
+                        type="password"
+                        id="confirmPassword"
+                        autoComplete="current-password"
+                        onChange =  {(e) => setConfirmPass(e.target.value)}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControlLabel
+                        control={<Checkbox value="allowExtraEmails" color="primary" />}
+                        label="I want to receive inspiration, marketing promotions and updates via email."
+                        style={{textAlign:'left'}}
 
-                  />
-                </Grid>
-              </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Sign Up
-              </Button>
-              <Grid container justifyContent="flex-end">
-                <Grid item>
-                  <Link href="/login" variant="body2">
-                    Already have an account? Sign in
-                  </Link>
-                </Grid>
-              </Grid>
-            </form>
-          </div>
-
-        </Box>
+                      />
+                    </Grid>
+                  </Grid>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    Sign Up
+                  </Button>
+                  <Grid container justifyContent="flex-end">
+                    <Grid item>
+                      <Link href="/login" variant="body2">
+                        Already have an account? Sign in
+                      </Link>
+                    </Grid>
+                  </Grid>
+                </form>
+              </div>
+            : <div className={classes.paper}>
+                <form className={classes.form} noValidate onSubmit={handleConfirm}>
+                  <h3>Check your email for confirmation code</h3>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <TextField 
+                        variant="outlined"
+                        required
+                        fullWidth
+                        id="confirm"
+                        label="Enter Confirmation Code"
+                        name="confirm"
+                        onChange = {(e) => setConfCode(e.target.value)}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    Enter Code
+                  </Button>
+                </form>
+              </div>
+          }
+          </Box>
         
       </Container>
       </div>

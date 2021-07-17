@@ -1,0 +1,6 @@
+{
+  "authSelections": "userPoolOnly",
+  "resourceName": "rselaunchpadfrontend",
+  "serviceType": "imported",
+  "region": "ap-southeast-2"
+}
