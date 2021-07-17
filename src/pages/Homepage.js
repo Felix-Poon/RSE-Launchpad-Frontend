@@ -1,17 +1,18 @@
-/* eslint-disable no-use-before-define */
-import React from 'react';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import React from "react";
+import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
-import { Container } from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
 import classNames from "classnames";
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    "& .MuiInputBase-input": {
+      color: 'white',
+    }, 
     "& label.Mui-focused": {
       color: "white",
       borderBottomColor: "white"
@@ -24,10 +25,9 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiInput-underline:before": {
       borderBottomColor: "white"
     },
-
     "& .MuiInput-underline:after": {
       borderBottomColor: "white"
-    },
+    },   
   },
 
   placement: {
@@ -57,6 +57,10 @@ const useStyles = makeStyles((theme) => ({
   },
   searchBarArea: {
     width: '60%',
+    "& .MuiSvgIcon-root": {
+      color: 'white',
+    },
+
   }, 
 
   tag: {
@@ -76,6 +80,8 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+const filter = createFilterOptions();
+
 export function Homepage() {
   const classes = useStyles();
 
@@ -92,6 +98,7 @@ export function Homepage() {
         <div className={classes.searchBarArea}>
           <Autocomplete
             multiple
+            name="search"
             id="tags-standard"
             className={classes.root}
             renderTags={(value, getTagProps) =>
@@ -108,16 +115,46 @@ export function Homepage() {
               ))
             }
             options={subjectList}
-            getOptionLabel={(option) => option.title}
             filterSelectedOptions
-            noOptionsText="Please select one of the dropdown options"
+
             renderInput={(params) => (
               <TextField
                 {...params}
                 label="Search by subject or resource type"   
               />
             )}
-          />
+            onChange={(event, value) => console.log(value)}
+
+
+            getOptionLabel={(option) => {
+              // Value selected with enter, right from the input
+              if (typeof option === "string") {
+                return option;
+              }
+              // Add "xxx" option created dynamically
+              if (option.inputValue) {
+                return option.inputValue;
+              }
+              // Regular option
+              return option.title;
+            }}
+
+
+            filterOptions={(options, params) => {
+              const filtered = filter(options, params);
+              // Suggest the creation of a new value
+              if (params.inputValue !== "") {
+                filtered.push({
+                  inputValue: params.inputValue,
+                  title: `${params.inputValue}`
+                });
+              }
+              
+              return filtered;
+            }}
+
+
+            /> 
         </div>
       </div>
     </div>
