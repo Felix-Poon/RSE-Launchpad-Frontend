@@ -1,6 +1,6 @@
 {
   "auth": {
-    "rselaunchpadfrontendd3ea782a": {
+    "rselaunchpadfrontendaff07c4f": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
