@@ -62,6 +62,11 @@ const useStyles = makeStyles((theme) => ({
       color: "#572CBF",
     },
   },
+  label: {
+    fontFamily: 'Poppins, sans-serif',
+    /* padding: '0 0 10px 0',
+    margin: '0 0 100px 0', */
+  }
 }));
 
 export function Search() {
@@ -106,7 +111,7 @@ export function Search() {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Search by subject or resource type"   
+                  label={<div className={classes.label}>Search by subject or resource type</div>} 
                 />
               )}
 

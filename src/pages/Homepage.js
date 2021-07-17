@@ -139,9 +139,6 @@ export function Homepage() {
       <div className={classes.searchContainer}>
         <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
           <SearchIcon className={classes.searchIcon}/>
-          {/* <IconButton className={classes.searchIcon} aria-label="menu" disabled>
-            <SearchIcon />
-          </IconButton> */}
           <div className={classes.searchBarArea}>
             <Autocomplete
               multiple
