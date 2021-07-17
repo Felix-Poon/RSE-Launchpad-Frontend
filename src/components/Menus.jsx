@@ -126,7 +126,7 @@ export function LogoutMenu() {
   return(
     <div>
       <div>
-        <Link>
+        <Link to="/add_resource">
           <Button className={classes.clearBtn}>
             <PostAddIcon style={{margin:'0 5px'}}/>
             <h4>Add resource</h4>
