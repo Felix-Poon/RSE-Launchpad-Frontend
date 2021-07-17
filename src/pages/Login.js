@@ -16,6 +16,8 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import { mdiRocketOutline } from '@mdi/js';
 
+import { Auth } from 'aws-amplify';
+
 const useStyles = makeStyles((theme) => ({
   placement: {
     display: 'flex',
@@ -143,6 +145,15 @@ export function Login() {
       />
     </div>
   );
+
+  // async function signIn() {
+  //   try {
+  //       const user = await Auth.signIn(username, password);
+  //       console.log(user)
+  //   } catch (error) {
+  //       alert('error signing in', error);
+  //   }
+  // }
 
   return(
     <div className={classes.placement}>
