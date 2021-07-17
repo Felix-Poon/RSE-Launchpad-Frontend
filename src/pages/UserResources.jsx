@@ -1,20 +1,15 @@
 import React from 'react';
 import { SearchCard } from '../components/SearchCard';
-import { makeStyles } from '@material-ui/core/styles';
+//import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    /* argin: '50px' */
-  }
-}));
+export function UserResources() {
+  //const classes = useStyles();
 
-export function Search() {
-  const classes = useStyles();
   return(
-    <div className={classes.root}>
+    <div >
       <div>
         <div style={{margin:'30px 40px'}}>
-          ADD SEARCH BAR
+          <h2>Your Resources</h2>
         </div>
         <SearchCard 
           title='TITLE'
@@ -39,6 +34,5 @@ export function Search() {
         />
       </div>
     </div>
-    
   );
 }

@@ -18,6 +18,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 
 }) */
 import { Search } from './pages/Search';
+import { UserResources } from './pages/UserResources';
 //import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -67,6 +68,9 @@ function App() {
           </Route>
           <Route path="/search/:query">
             <Search />
+          </Route>
+          <Route path="/user/resources">
+            <UserResources />
           </Route>
           <Route path="/">
             <Homepage />

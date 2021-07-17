@@ -34,7 +34,7 @@ const logoutMenu = (<LogoutMenu/>);
 // Put header here
 export function Header() {
   const classes = useStyles();
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(true);
 
   /* Check if user logged in */
   let menu = loggedIn ? logoutMenu : loginMenu;

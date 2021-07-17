@@ -14,6 +14,9 @@ import Grid from '@material-ui/core/Grid';
 import { useHistory } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 
+import { mdiRocketOutline } from '@mdi/js';
+import Icon from '@mdi/react'
+
 const useStyles = makeStyles((theme) => ({
   placement: {
     display: 'flex',
@@ -27,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '0 90px'
   },
   heading: {
-    fontSize: '3rem'
+    fontSize: '7vh'
   },
   paper: {
     display: 'flex',
@@ -39,7 +42,15 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    textTransform: 'none',
+    fontFamily: 'Poppins, sans-serif',
+    fontWeight: 600,
+    margin: '25px 0 0 0',
+    fontSize: '1.25rem',
   },
+  subtitle: {
+    fontSize: '2.5vh',
+  }
 }));
 
 export function Register() {
@@ -105,10 +116,12 @@ export function Register() {
         <h1 className={classes.heading}>
           Hi there!
         </h1>
-        <h3>Join the world's most inspired community of self-learners.</h3>
+        <h3 className={classes.subtitle}>
+          Join the world's most inspired community of self-learners.
+        </h3>
       </div>
       <div className={classes.container}>
-        <Container component="main" maxWidth="sm">
+        <Container maxWidth="sm">
           <Box bgcolor='white' color="black" className='box-generic'>
           {getConfirm === false
             ? <div className={classes.paper}>
@@ -182,6 +195,12 @@ export function Register() {
                     className={classes.submit}
                   >
                     Sign Up
+                    <Icon path={mdiRocketOutline}
+                      size={1.5}
+                      color="white"
+                      rotate='90'
+                      style={{margin: '0 0 0 10px'}}
+                    />
                   </Button>
                   <Grid container justifyContent="flex-end">
                     <Grid item>
@@ -231,12 +250,8 @@ export function Register() {
               </div>
           }
           </Box>
-        
       </Container>
       </div>
-
-
-
     </div>
 
 

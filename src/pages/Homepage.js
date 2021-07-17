@@ -39,10 +39,10 @@ const useStyles = makeStyles((theme) => ({
   container: {
     textAlign: 'center',
     width: '50%',
-    padding: '100px 0px 0px 100px',
+    padding: '0px 90px',
   },
   heading: {
-    fontSize: '3.7rem'
+    fontSize: '7vh'
   },
   searchContainer: {
     textAlign: 'center',
@@ -59,7 +59,6 @@ const useStyles = makeStyles((theme) => ({
     width: 450,
     marginTop: 0,
   }, 
-
   tag: {
     height: 33,
     position: "relative",
@@ -71,9 +70,11 @@ const useStyles = makeStyles((theme) => ({
     },
     "& .MuiChip-deleteIcon": {
       color: "#572CBF",
-    },
+    }
   },
-
+  subtitle: {
+    fontSize: '2.5vh',
+  }
 
 }));
 
@@ -84,7 +85,9 @@ export function Homepage() {
     <div className={classes.placement}>
       <div className={classes.container}>
         <h1 className={classes.heading}>Make learning easier with launchpad now.</h1>
-        <h2>Find helpful resources, rated by the community.</h2>
+        <h3 className={classes.subtitle}>
+          Find helpful resources, rated by the community.
+        </h3>
       </div>
       <div className={classes.searchContainer}>
         <IconButton className={classes.searchIcon} aria-label="menu">
