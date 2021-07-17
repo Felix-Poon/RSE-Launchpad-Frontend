@@ -11,6 +11,12 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
+import { AddResource } from './pages/AddResource';
+import { ThemeProvider } from '@material-ui/core/styles';
+//import Palettefrom './styles/Theme';
+/* const theme = createMuiTheme({
+
+}) */
 import { Search } from './pages/Search';
 import { UserResources } from './pages/UserResources';
 //import { makeStyles } from '@material-ui/core/styles';
@@ -32,8 +38,28 @@ function App() {
     <Router>
       <div>
         <Header />
+        {/* <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+            <li>
+              <Link to="/register">Register</Link>
+            </li>
+            <li>
+              <Link to="/add_resource">Add Resource</Link>
+            </li>
+          </ul>
+        </nav> */}
+
         <Switch>
           {/* ADD MORE PAGES HERE */}
+          <Route path="/add_resource">
+            <AddResource />
+          </Route>
           <Route path="/login">
             <Login />
           </Route>

@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import { Container } from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
-import classNames from "classnames";
+// import classNames from "classnames";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -98,19 +98,19 @@ export function Homepage() {
             multiple
             id="tags-standard"
             className={classes.root}
-            renderTags={(value, getTagProps) =>
-              value.map((option, index) => (
-                <Chip
-                classes={{
-                  root: classNames(classes.tag)
-                }}
-                variant="outlined"
-                label={`${option.title}`}
-                {...getTagProps({ index })}
+            // renderTags={(value, getTagProps) =>
+            //   value.map((option, index) => (
+            //     <Chip
+            //     classes={{
+            //       root: classNames(classes.tag)
+            //     }}
+            //     variant="outlined"
+            //     label={`${option.title}`}
+            //     {...getTagProps({ index })}
                 
-                />
-              ))
-            }
+            //     />
+            //   ))
+            // }
             options={subjectList}
             getOptionLabel={(option) => option.title}
             filterSelectedOptions
