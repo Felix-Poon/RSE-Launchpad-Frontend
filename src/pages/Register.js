@@ -11,7 +11,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-
+import { useHistory } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 
 const useStyles = makeStyles((theme) => ({
@@ -52,6 +52,7 @@ export function Register() {
   const [passwordErr, setPasswordErr] = React.useState("");
   const [getConfirm, setGetConfirm] = React.useState(false);
   const [confCode, setConfCode] = React.useState("");
+  const history = useHistory();
 
   async function signUp() {
     try {
@@ -92,8 +93,9 @@ export function Register() {
     try {
       const response = await Auth.confirmSignUp(username, confCode);
       console.log(response);
+      history.push('/');
     } catch (error) {
-        console.log('error confirming sign up', error);
+        alert('error confirming sign up', error);
     }
   }
 
@@ -216,6 +218,16 @@ export function Register() {
                     Enter Code
                   </Button>
                 </form>
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    onClick={() => history.push('/')}
+                  >
+                    Skip confirmation
+                </Button>
               </div>
           }
           </Box>
