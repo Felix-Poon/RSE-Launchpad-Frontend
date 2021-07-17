@@ -58,32 +58,33 @@ function App() {
             </ul>
           </nav> */}
 
-        <Switch>
-          {/* ADD MORE PAGES HERE */}
-          <Route path="/rate_resource">
-            <RateResource />
-          </Route>          
-          <Route path="/add_resource">
-            <AddResource />
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/register">
-            <Register />
-          </Route>
-          <Route path="/search/:query">
-            <Search />
-          </Route>
-          <Route path="/user/resources">
-            <UserResources />
-          </Route>
-          <Route path="/">
-            <Homepage />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+          <Switch>
+            {/* ADD MORE PAGES HERE */}
+            <Route path="/rate_resource">
+              <RateResource />
+            </Route>          
+            <Route path="/add_resource">
+              <AddResource />
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/register">
+              <Register />
+            </Route>
+            <Route path="/search/:query">
+              <Search />
+            </Route>
+            <Route path="/user/resources">
+              <UserResources />
+            </Route>
+            <Route path="/">
+              <Homepage />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    </UserContext>
   );
 }
 
