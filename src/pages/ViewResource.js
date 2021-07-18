@@ -128,7 +128,7 @@ export function ViewResource(props) {
   }
 
   function handleRate() {
-    history.push('/view_resource')
+    history.push(`/rate_resource/:resource`)
   }
 
   return (

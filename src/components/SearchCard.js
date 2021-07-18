@@ -46,17 +46,17 @@ const useStyles = makeStyles((theme) => ({
 export function SearchCard(props) {
   const classes = useStyles();
   const href = `/${props.link}`;
-  const rating = `${props.rating}/5`
+  const rating = `${Math.round(props.rating,4)}/5`
 
   return(
-    <a href={href}>
+    <a href={`/view_resource/${props.title}`}>
       <Box bgcolor='white' color="black" className={classes.box} key={props.key}>
         <div>
           <div className={classes.cardHeader}>
             <h2 className={classes.cardTitle}>{props.title}</h2>
-            {/* <a href={href}>
+            <a href={href}>
               <u>{props.link}</u>
-            </a> */}
+            </a>
           </div>
           <p className={classes.cardText}>{props.text}</p>
         </div>
