@@ -48,6 +48,10 @@ export function UserResources() {
       alert("error: ", error)
     }
   }
+
+  /* function renderCard(title, link, text, author, rating) {
+    return 
+  } */
   
   return(
     <div >
