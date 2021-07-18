@@ -118,8 +118,11 @@ export function Search() {
   React.useEffect(() => {
     if(firstRender.current) {
       firstRender.current = false;
-    } 
+    } else {
+      console.log(resources)
+    }
   },[resources])
+
   React.useEffect(() => {
     getResources();
   },[])

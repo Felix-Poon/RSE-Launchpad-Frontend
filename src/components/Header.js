@@ -32,19 +32,22 @@ const useStyles = makeStyles((theme) => ({
 const loginMenu = (<LoginMenu/>);
 const logoutMenu = (<LogoutMenu/>);
 
-
-
 // Put header here
 export function Header() {
   const classes = useStyles();
   const context = React.useContext(UserContext);
   let [usernameToken, setUsernameToken] = context;
   if (usernameToken === '' && localStorage.getItem('userName')) {
-    usernameToken = localStorage.getItem('userName')
+    setUsernameToken(localStorage.getItem('userName'))
   }
   
+  React.useEffect(() => {
+    console.log("logout/login check: ", context)
+  },[context])
+
   /* Check if user logged in */
   let menu = usernameToken !== '' ? logoutMenu : loginMenu;
+  console.log("menu token: ", usernameToken)
 
   return(
 
@@ -63,7 +66,7 @@ export function Header() {
         </Link>
         
         <div style={{flex:1}}/>
-        {menu}
+        {usernameToken !=='' ? logoutMenu: loginMenu}
       </Toolbar>
     </AppBar>
 
