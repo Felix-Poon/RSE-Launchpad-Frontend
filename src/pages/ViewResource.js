@@ -18,6 +18,8 @@ import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete
 import Icon from '@mdi/react'
 import { mdiRocketOutline } from '@mdi/js';
 
+import { useHistory } from 'react-router-dom';
+
 const useStyles = makeStyles((theme) => ({
   placement: {
     display: 'flex',
@@ -94,6 +96,7 @@ const filter = createFilterOptions();
 
 export function ViewResource(props) {
   const classes = useStyles();
+  const history = useHistory();
 
   const [rating, setRating] = useState({
                                         "understanding": "3", 
@@ -122,6 +125,10 @@ export function ViewResource(props) {
     // make API call with parameters and use promises to get response
     const response = await fetch("https://ggvpaganoj.execute-api.ap-southeast-2.amazonaws.com/Development/resource", requestOptions)
     console.log(response);
+  }
+
+  function handleRate() {
+    history.push('/view_resource')
   }
 
   return (
@@ -183,6 +190,7 @@ export function ViewResource(props) {
             border: 1,
             borderColor: 'white'
           }}
+          onClick={handleRate}
         >
           Did you use this resource? Give your own rating!
         </Button>
