@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
     margin: '10px 0 0 0',
     fontSize: '1.25rem',
+    border: 1,
   },
   resourceDisplay: {
       textAlign: 'left',
@@ -91,7 +92,7 @@ const marks = [
 
 const filter = createFilterOptions();
 
-export function RateResource(props) {
+export function ViewResource(props) {
   const classes = useStyles();
 
   const [rating, setRating] = useState({
@@ -127,9 +128,8 @@ export function RateResource(props) {
     <Container maxWidth='sm'>
       <Box bgcolor='white' color="black" className='box-generic'>
         <div className={classes.paper}>
-          <h1>Give your own rating: </h1>
+          <h1 style={{margin:0}}>TITLE</h1>
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
-            <h2 className={classes.resourceDisplay}>TITLE</h2>
             <h4 className={classes.resourceDisplay}>URL LINK </h4>
             <h4 className={classes.resourceDisplay}>Type of Resource </h4>
             <h4 className={classes.resourceDisplay}>Original Submitter's Description </h4>
@@ -142,6 +142,7 @@ export function RateResource(props) {
               defaultValue={3}
               min = {0}
               max={5}
+              disabled
               onChange = {(e, val) => setRating({...rating, "understanding": `${val}`})}
             />
             <Typography gutterBottom>Level of difficulty</Typography>
@@ -151,6 +152,7 @@ export function RateResource(props) {
               defaultValue={3}
               min = {0}
               max={5}
+              disabled
               onChange = {(e, val) => setRating({...rating, "difficulty": `${val}`})}
             />
             <Typography gutterBottom>Reliability</Typography>
@@ -160,29 +162,31 @@ export function RateResource(props) {
               defaultValue={3}
               min = {0}
               max={5}
+              disabled
               onChange = {(e, val) => setRating({...rating, "reliability": `${val}`})}
             />
-            <div>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                fullWidth
-                style={{margin: '25px 0 0 0', fontSize: '1.25rem'}}
-              >
-                Rate Resource
-                <Icon path={mdiRocketOutline}
-                  size={1.5}
-                  color="white"
-                  rotate='90'
-                  style={{margin: '0 0 0 10px'}}
-                />
-              </Button>
-            </div>
           </form>
         </div>
       </Box>
+
+      <div>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+          fullWidth
+          style={{
+            margin: '25px 0 0 0', 
+            fontSize: '1.25rem', 
+            backgroundColor: '#242135',
+            border: 1,
+            borderColor: 'white'
+          }}
+        >
+          Did you use this resource? Give your own rating!
+        </Button>
+      </div>
     </Container>
   );
 }

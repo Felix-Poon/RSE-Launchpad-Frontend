@@ -15,6 +15,9 @@ import Link from '@material-ui/core/Link';
 import MenuItem from "@material-ui/core/MenuItem";
 import { Typography, Slider, Tooltip } from '@material-ui/core';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
+import Icon from '@mdi/react'
+import { mdiRocketOutline } from '@mdi/js';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   placement: {
@@ -28,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
     padding: '0 90px',
   },
   heading: {
-    fontSize: '3rem'
+    /* fontSize: '3rem' */
+    fontSize: '4vw',
   },
   paper: {
     display: 'flex',
@@ -42,6 +46,11 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    textTransform: 'none',
+    fontFamily: 'Poppins, sans-serif',
+    fontWeight: 600,
+    margin: '10px 0 0 0',
+    fontSize: '1.25rem',
   },
 }));
 
@@ -77,6 +86,7 @@ const filter = createFilterOptions();
 
 export function AddResource() {
   const classes = useStyles();
+  const history = useHistory();
   const [resourceName, setResourceName] = useState("");
   const [categories, setCategories] = useState([]);
   const [description, setDescription] = useState("");
@@ -85,10 +95,13 @@ export function AddResource() {
   const [userResourceType, setUserResourceType] = useState("");
   const [resourceReview, setResourceReview] = useState("");
   const [rating, setRating] = useState({
-                                        "overall": "",
-                                        "understanding": "", 
-                                        "difficulty": "", 
-                                        "reliability": "" })
+                                        "overall": "5",
+                                        "understanding": "5", 
+                                        "difficulty": "5", 
+                                        "reliability": "5" });
+  const author = localStorage.getItem('userName');
+  
+  // console.log("author:", author)
 
   // useEffect(() => {
   //   console.log(categories)
@@ -118,8 +131,11 @@ export function AddResource() {
       description: description,
       review: resourceReview,
       categories: uploadCategories,
-      rating: rating
+      rating: rating,
+      author: author
     });
+
+    console.log(raw);
     // create a JSON object with parameters for API call and store in a variable
     var requestOptions = {
         method: 'POST',
@@ -128,8 +144,18 @@ export function AddResource() {
         redirect: 'follow'
     };
     // make API call with parameters and use promises to get response
-    const response = await fetch("https://ggvpaganoj.execute-api.ap-southeast-2.amazonaws.com/Development/resource", requestOptions)
-    console.log(response);
+    try{
+      const response = await fetch("https://ggvpaganoj.execute-api.ap-southeast-2.amazonaws.com/Development/resource", requestOptions)
+      console.log(response);
+      if (response['status'] === 200){
+        history.push('/user/resources')
+      } else {
+        console.log(response)
+      }
+    } catch (error) {
+      alert('error: ', error)
+    }
+
   }
 
   return (
@@ -299,15 +325,24 @@ export function AddResource() {
               max={10}
               onChange = {(e, val) => setRating({...rating, "reliability": `${val}`})}
               />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              >
-              Add resource
-            </Button>
+            <div>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  fullWidth
+                  style={{margin: '25px 0 0 0', fontSize: '1.25rem'}}
+                >
+                  Add Resource
+                  <Icon path={mdiRocketOutline}
+                    size={1.5}
+                    color="white"
+                    rotate='90'
+                    style={{margin: '0 0 0 10px'}}
+                  />
+                </Button>
+              </div>
           </form>
         </div>
       </Box>

@@ -83,6 +83,10 @@ export function LogoutMenu() {
   }
   const history = useHistory();
 
+  const letter = usernameToken.charAt(0);
+  console.log(letter)
+
+
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -138,7 +142,7 @@ export function LogoutMenu() {
           aria-haspopup="true"
           onClick={handleToggle}
         >
-          <Avatar className={classes.avatar}>J</Avatar>
+          <Avatar className={classes.avatar}>{letter}</Avatar>
           {open ? <ArrowDropUpIcon style={{color: 'white'}}/> : <ArrowDropDownIcon style={{color: 'white'}}/>}
         </Button>
         <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>

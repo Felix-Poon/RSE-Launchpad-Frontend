@@ -14,6 +14,7 @@ import { Register } from './pages/Register';
 import { AddResource } from './pages/AddResource';
 import { RateResource } from './pages/RateResource';
 import { EditResource } from './pages/EditResource';
+import { ViewResource } from './pages/ViewResource';
 import { ThemeProvider } from '@material-ui/core/styles';
 //import Palettefrom './styles/Theme';
 /* const theme = createMuiTheme({
@@ -69,6 +70,9 @@ function App() {
           </Route>          
           <Route path="/add_resource">
             <AddResource />
+          </Route>
+          <Route path="/view_resource">
+            <ViewResource />
           </Route>
           <Route path="/login">
             <Login />
