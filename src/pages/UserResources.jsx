@@ -55,19 +55,22 @@ export function UserResources() {
     usernameToken = localStorage.getItem('userName')
   }
   const firstRender = React.useRef(true);
-
+  const [heading, setHeading] = React.useState('No resources found')
+ 
   React.useEffect(() => {
     if(firstRender.current) {
       firstRender.current = false;
     } else {
-      console.log("res: ", resources[0].ID);
+      console.log(resources)
+      console.log(resources.length)
+      //console.log("res: ", resources[0].ID);
     }
   },[resources])
 
 
   React.useEffect(() => {
     getResources();
-    console.log(usernameToken)
+    //console.log(usernameToken)
   },[])
 
   async function getResources () {
@@ -94,19 +97,17 @@ export function UserResources() {
     }
   }
 
-  /* function renderCard(title, link, text, author, rating) {
-    return 
-  } */
   
   return(
     <div >
       <div>
         <div style={{margin:'30px 40px'}}>
-          <h2>Your Resources</h2>
+          {resources.length ? <h2>Your Resources</h2> : <h2>No resources found</h2>}
         </div>
         {firstRender.current === false && (
           <>
-            {resources.map((val, idx) => {
+            {
+              resources.map((val, idx) => {
               return (
                 <SearchCard 
                 key={idx}
