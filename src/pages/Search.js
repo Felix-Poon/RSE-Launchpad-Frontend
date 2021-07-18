@@ -240,6 +240,7 @@ export function Search() {
         <h2 style={{margin:'0 40px'}}>
           Search results for {searchArr.join(', ')}
         </h2>
+        {resources.length ? null : <p style={{margin:'0 40px'}}>No resources found</p>}
           <>
             {resources.map((val, idx) => {
               return (
