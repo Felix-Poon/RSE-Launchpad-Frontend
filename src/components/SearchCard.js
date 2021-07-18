@@ -50,7 +50,7 @@ export function SearchCard(props) {
 
   return(
     <a href={href}>
-      <Box bgcolor='white' color="black" className={classes.box}>
+      <Box bgcolor='white' color="black" className={classes.box} key={props.key}>
         <div>
           <div className={classes.cardHeader}>
             <h2 className={classes.cardTitle}>{props.title}</h2>

@@ -10,7 +10,7 @@ import Chip from '@material-ui/core/Chip';
 import classNames from "classnames";
 import { mdiRocket } from '@mdi/js';
 import Icon from '@mdi/react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -104,7 +104,8 @@ export function Search() {
   const filter = createFilterOptions();
   const [searchValue, setSearchValue] = React.useState([]);
   const history = useHistory();
-
+  const [resources, setResources] = React.useState([]);
+  const firstRender = React.useRef(true);
 
   // Make array from URL path
   const path = location.pathname.split('/').pop()
@@ -114,8 +115,39 @@ export function Search() {
   /* searchArr.forEach(label => {
     tags.push({title:label})
   }) */
+  React.useEffect(() => {
+    if(firstRender.current) {
+      firstRender.current = false;
+    } 
+  },[resources])
+  React.useEffect(() => {
+    getResources();
+  },[])
 
-
+  // call api to get resources
+  async function getResources () {
+    var myHeaders = new Headers();
+    // add content type header to object
+    myHeaders.append("Content-Type", "application/json");
+    // call api to get resources based on author
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    }
+    try {
+      const response = await fetch(`https://ggvpaganoj.execute-api.ap-southeast-2.amazonaws.com/Development/resource?SearchKey=standardInput&Input=${searchArr}`, requestOptions)
+      if (response['status'] === 200) {
+        const res = await response.json();
+        await setResources(res)
+      } else {
+        alert(`error: ${response['status']} Failed to fetch`);
+      }
+    } catch (error) {
+      console.log(error)
+      alert("error: ", error)
+    }
+  }
 
   //console.log(tags)
   console.log(searchArr)
@@ -208,27 +240,20 @@ export function Search() {
         <h2 style={{margin:'0 40px'}}>
           Search results for {searchArr.join(', ')}
         </h2>
-        <SearchCard 
-          title='TITLE'
-          link='linkkk'
-          text='heyyy'
-          author='author'
-          rating='2'
-        />
-        <SearchCard 
-          title='TITLE'
-          link='linkkk'
-          text='heyyy'
-          author='author'
-          rating='2'
-        />
-        <SearchCard 
-          title='TITLE'
-          link='linkkk'
-          text='heyyy'
-          author='author'
-          rating='2'
-        />
+          <>
+            {resources.map((val, idx) => {
+              return (
+                <SearchCard 
+                key={idx}
+                title= {val.ID}
+                link={val.Location}
+                text={val.Description}
+                author={val.Author}
+                rating={val.CommunityRatings.Overall}
+              />
+              )
+            })}
+          </>
       </div>
       
       </div>
