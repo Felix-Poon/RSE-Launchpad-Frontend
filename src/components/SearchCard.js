@@ -54,9 +54,7 @@ export function SearchCard(props) {
         <div>
           <div className={classes.cardHeader}>
             <h2 className={classes.cardTitle}>{props.title}</h2>
-            <a href={href}>
-              <u>{props.link}</u>
-            </a>
+            <u style={{color: '#3F39CA'}}>{props.link}</u>
           </div>
           <p className={classes.cardText}>{props.text}</p>
         </div>

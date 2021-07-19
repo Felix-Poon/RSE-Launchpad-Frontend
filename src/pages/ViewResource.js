@@ -61,7 +61,8 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'left',
     paddingLeft: 10,
     paddingTop: 10,
-  }
+  },
+  
 }));
 
 function ValueLabelComponent(props) {
@@ -102,6 +103,10 @@ export function ViewResource(props) {
                                         "understanding": "0", 
                                         "difficulty": "0", 
                                         "reliability": "0" })
+  const [underRating, setUnderRating] = useState('0');
+  //const [diffRating, set]
+
+
   const [resource, setResource] = React.useState([]);
   const firstRender = React.useRef(true);
 
@@ -152,10 +157,13 @@ export function ViewResource(props) {
 
 
         await setResource(res[0])
-        await setRating({...rating, "understanding": `${res[0].CommunityRatings.EaseOfUnderstanding}`})
-        //console.log(rating)
-        await setRating({...rating, "difficulty": `${res[0].CommunityRatings.DepthOfMaterial}`})
-        await setRating({...rating, "reliability": `${res[0].CommunityRatings.Reliability}`})
+        
+        await setUnderRating(res[0].CommunityRatings.EaseOfUnderstanding)
+
+        //await setRating({...rating, "understanding": `${res[0].CommunityRatings.EaseOfUnderstanding}`})
+        await console.log(rating)
+        //await setRating({...rating, "difficulty": `${res[0].CommunityRatings.DepthOfMaterial}`})
+        //await setRating({...rating, "reliability": `${res[0].CommunityRatings.Reliability}`})
         console.log(rating)
       } else {
         alert(`error: ${response['status']} Failed to fetch`);
@@ -171,7 +179,6 @@ export function ViewResource(props) {
   }
 
   //console.log(parseInt(resource.CommunityRatings.EaseOfUnderstanding))
-  console.log(rating.understanding)
   console.log(rating)
 
   return (
@@ -193,7 +200,7 @@ export function ViewResource(props) {
               min = {0}
               max={10}
               disabled
-              value={rating.understanding ? rating.understanding : 10}
+              value={rating ? rating.understanding : 10}
             />
             <Typography gutterBottom>Level of difficulty</Typography>
             <Slider
@@ -203,7 +210,7 @@ export function ViewResource(props) {
               min = {0}
               max={10}
               disabled
-              value={rating.difficulty ? rating.difficulty : 10}
+              value={rating ? rating.difficulty : 10}
             />
             <Typography gutterBottom>Reliability</Typography>
             <Slider
@@ -213,7 +220,8 @@ export function ViewResource(props) {
               min = {0}
               max={10}
               disabled
-              value={rating.reliability ? rating.reliability : 10}
+
+              value={rating ? rating.reliability : 10}
             />
           </form>
         </div>
