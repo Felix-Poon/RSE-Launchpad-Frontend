@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 export function SearchCard(props) {
   const classes = useStyles();
   const href = `/${props.link}`;
-  const rating = `${props.rating}/5`
+  const rating = `${Math.round(props.rating,2)}/10`
 
   return(
     <a href={href}>
