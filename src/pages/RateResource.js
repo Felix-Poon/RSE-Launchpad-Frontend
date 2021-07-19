@@ -190,19 +190,18 @@ export function RateResource(props) {
               defaultValue={3}
               min = {0}
               max={10}
-              disabled
               value={(rating.difficulty)}
+              onChange = {(e, val) => setRating({...rating, "difficulty": `${val}`})}
             />
             <Typography gutterBottom>Ease of Understanding</Typography>
             <Slider
               style={{color:"#4DAD3D"}}
-              
               ValueLabelComponent={ValueLabelComponent}
               aria-label="custom thumb label"
               defaultValue={3}
               min = {0}
               max={10}
-              disabled
+              onChange = {(e, val) => setRating({...rating, "understanding": `${val}`})}
               value={(rating.understanding)}
             />
             <Typography gutterBottom>Reliability</Typography>
@@ -213,7 +212,7 @@ export function RateResource(props) {
               defaultValue={3}
               min = {0}
               max={10}
-              disabled
+              onChange = {(e, val) => setRating({...rating, "reliability": `${val}`})}
               value={(rating.reliability)}
             />
             <div>

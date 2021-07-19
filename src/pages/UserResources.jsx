@@ -54,6 +54,7 @@ export function UserResources() {
   if (usernameToken === '' && localStorage.getItem('userName')) {
     usernameToken = localStorage.getItem('userName')
   }
+  const [deleteFlag, setDeleteFlag] = React.useState(false);
   const firstRender = React.useRef(true);
   const [heading, setHeading] = React.useState('No resources found')
  
@@ -68,10 +69,44 @@ export function UserResources() {
   },[resources])
 
 
+  // React.useEffect(() => {
+  //   getResources();
+  //   //console.log(usernameToken)
+  // },[])
+
+  async function deleteResource (ID) {
+    var myHeaders = new Headers();
+    // add content type header to object
+    myHeaders.append("Content-Type", "application/json");
+    var raw = JSON.stringify ({
+      ResourceID: ID
+    });
+    // call api to get resources based on author
+    var requestOptions = {
+      method: 'DELETE',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    }
+    try {
+      const response = await fetch(`https://ggvpaganoj.execute-api.ap-southeast-2.amazonaws.com/Development/resource`, requestOptions)
+      if (response['status'] === 200) {
+        const res = await response.json();
+        setDeleteFlag((prev) => !prev);
+        console.log(res)
+      } else {
+        alert(`error: ${response['status']} Failed to delete`);
+      }
+    } catch (error) {
+      console.log(error)
+      alert("error: ", error)
+    }
+  }
+
   React.useEffect(() => {
     getResources();
     //console.log(usernameToken)
-  },[])
+  },[deleteFlag])
 
   async function getResources () {
     var myHeaders = new Headers();
@@ -109,7 +144,9 @@ export function UserResources() {
             {
               resources.map((val, idx) => {
               return (
-                <SearchCard 
+                <SearchCard
+                owner={true}
+                deleteRes={deleteResource}
                 key={idx}
                 title= {val.ID}
                 link={val.Location}

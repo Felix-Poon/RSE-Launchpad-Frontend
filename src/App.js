@@ -63,7 +63,7 @@ function App() {
 
         <Switch>
           {/* ADD MORE PAGES HERE */}
-          <Route path="/edit_resource">
+          <Route path="/:resource/edit_resource">
             <EditResource />
           </Route> 
           <Route path="/rate_resource/:resource">
