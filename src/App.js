@@ -16,6 +16,7 @@ import { RateResource } from './pages/RateResource';
 import { EditResource } from './pages/EditResource';
 import { ViewResource } from './pages/ViewResource';
 import { ThemeProvider } from '@material-ui/core/styles';
+import ErrorPage from './pages/error404';
 //import Palettefrom './styles/Theme';
 /* const theme = createMuiTheme({
 
@@ -88,6 +89,9 @@ function App() {
           </Route>
           <Route path="/">
             <Homepage />
+          </Route>
+          <Route path="">
+            <ErrorPage />
           </Route>
         </Switch>
       </div>

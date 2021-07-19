@@ -18,6 +18,8 @@ import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete
 import Icon from '@mdi/react'
 import { mdiRocketOutline } from '@mdi/js';
 
+import { useParams } from 'react-router-dom';
+
 const useStyles = makeStyles((theme) => ({
   placement: {
     display: 'flex',
@@ -93,11 +95,29 @@ const filter = createFilterOptions();
 
 export function RateResource(props) {
   const classes = useStyles();
-
+  const [resource, setResource] = React.useState([]);
   const [rating, setRating] = useState({
-                                        "understanding": "3", 
-                                        "difficulty": "3", 
-                                        "reliability": "3" })
+    "overall": "",
+    "understanding": "", 
+    "difficulty": "", 
+    "reliability": "" 
+  })
+  const params = useParams();
+  const firstRender = React.useRef(true);
+
+  React.useEffect(() => {
+    renderResource();
+  },[])
+
+  React.useEffect(() => {
+    if(firstRender.current) {
+      firstRender.current = false;
+    } else {
+      setRating({"understanding": `${resource.CommunityRatings.EaseOfUnderstanding}`,
+                  "difficulty": `${resource.CommunityRatings.DepthOfMaterial}`,
+                  "reliability": `${resource.CommunityRatings.Reliability}` })
+    }
+  },[resource])
 
   // define the callAPI function that takes a first name and last name as parameters
   async function handleSubmit (event) {
@@ -123,43 +143,78 @@ export function RateResource(props) {
     console.log(response);
   }
 
+
+   // define the callAPI function that takes a first name and last name as parameters
+   async function renderResource() {
+    // instantiate a headers object
+    var myHeaders = new Headers();
+    // add content type header to object
+    myHeaders.append("Content-Type", "application/json");
+    // call api to get resources based on author
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    }
+    try {
+      const response = await fetch(`https://ggvpaganoj.execute-api.ap-southeast-2.amazonaws.com/Development/resource?SearchKey=byTitle&Input=${params.resource}`, requestOptions)
+      if (response['status'] === 200) {
+        const res = await response.json();
+        await setResource(res[0])
+      } else {
+        alert(`error: ${response['status']} Failed to fetch`);
+      }
+    } catch (error) {
+      // console.log(error)
+      alert("error: ", error)
+    }
+  }
+
   return (
     <Container maxWidth='sm'>
       <Box bgcolor='white' color="black" className='box-generic'>
         <div className={classes.paper}>
           <h1>Give your own rating: </h1>
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
-            <h2 className={classes.resourceDisplay}>TITLE</h2>
-            <h4 className={classes.resourceDisplay}>URL LINK </h4>
-            <h4 className={classes.resourceDisplay}>Type of Resource </h4>
-            <h4 className={classes.resourceDisplay}>Original Submitter's Description </h4>
+            <h2 className={classes.resourceDisplay}>{resource.ID}</h2>
+            <a href='#'><h4 className={classes.resourceDisplay}>{resource.Location}</h4></a>
+            <h4 className={classes.resourceDisplay}>Resource Type: {resource.TypeResource}</h4>
+            <h4 className={classes.resourceDisplay}>Description </h4>
+            <h4 className={classes.resourceDisplay}>{resource.description}</h4>
             <h2 className={classes.ratingTitle}>Rating:</h2>
+            <Typography gutterBottom>Level of difficulty</Typography>
+            <Slider 
+              style={{color:"#E4816B"}}
+              ValueLabelComponent={ValueLabelComponent}
+              aria-label="custom thumb label"
+              defaultValue={3}
+              min = {0}
+              max={10}
+              disabled
+              value={(rating.difficulty)}
+            />
             <Typography gutterBottom>Ease of Understanding</Typography>
             <Slider
+              style={{color:"#4DAD3D"}}
+              
               ValueLabelComponent={ValueLabelComponent}
               aria-label="custom thumb label"
               defaultValue={3}
               min = {0}
-              max={5}
-              onChange = {(e, val) => setRating({...rating, "understanding": `${val}`})}
-            />
-            <Typography gutterBottom>Level of difficulty</Typography>
-            <Slider
-              ValueLabelComponent={ValueLabelComponent}
-              aria-label="custom thumb label"
-              defaultValue={3}
-              min = {0}
-              max={5}
-              onChange = {(e, val) => setRating({...rating, "difficulty": `${val}`})}
+              max={10}
+              disabled
+              value={(rating.understanding)}
             />
             <Typography gutterBottom>Reliability</Typography>
             <Slider
+              style={{color:"#53B3CB"}}
               ValueLabelComponent={ValueLabelComponent}
               aria-label="custom thumb label"
               defaultValue={3}
               min = {0}
-              max={5}
-              onChange = {(e, val) => setRating({...rating, "reliability": `${val}`})}
+              max={10}
+              disabled
+              value={(rating.reliability)}
             />
             <div>
               <Button

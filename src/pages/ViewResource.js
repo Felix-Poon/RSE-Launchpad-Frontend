@@ -100,35 +100,45 @@ export function ViewResource(props) {
   const history = useHistory();
   const location = useLocation();
   const [rating, setRating] = useState({
-                                        "understanding": "0", 
-                                        "difficulty": "0", 
-                                        "reliability": "0" })
+    "overall": "",
+    "understanding": "", 
+    "difficulty": "", 
+    "reliability": "" })
   const [underRating, setUnderRating] = useState('0');
   //const [diffRating, set]
-
-
   const [resource, setResource] = React.useState([]);
   const firstRender = React.useRef(true);
 
   // Get title from URL
-  console.log(location.pathname)
+  // console.log(location.pathname)
   const path = location.pathname.split('/').pop()
-  console.log(path)
+  // console.log(path)
 
   React.useEffect(() => {
     if(firstRender.current) {
       firstRender.current = false;
     } else {
-      console.log(resource)
+      setRating({"understanding": `${resource.CommunityRatings.EaseOfUnderstanding}`,
+                  "difficulty": `${resource.CommunityRatings.DepthOfMaterial}`,
+                  "reliability": `${resource.CommunityRatings.Reliability}` })
     }
   },[resource])
+
+
+  React.useEffect(() => {
+    if(firstRender.current) {
+      firstRender.current = false;
+    } else {
+      console.log("rating: ",rating)
+    }
+  },[rating])
 
   React.useEffect(() => {
     renderResource();
   },[])
 
   // define the callAPI function that takes a first name and last name as parameters
-  async function renderResource() {;
+  async function renderResource() {
     // instantiate a headers object
     var myHeaders = new Headers();
     // add content type header to object
@@ -144,42 +154,40 @@ export function ViewResource(props) {
     console.log(response.json()); */
     try {
       const response = await fetch(`https://ggvpaganoj.execute-api.ap-southeast-2.amazonaws.com/Development/resource?SearchKey=byTitle&Input=${path}`, requestOptions)
-      console.log(response)
-      console.log(response.status)
+      // console.log(response)
+      // console.log(response.status)
       //console.log(response.json())
       if (response['status'] === 200) {
         const res = await response.json();
-        console.log(res[0])
+        // console.log("res: ", res[0])
 
-        console.log(res[0].CommunityRatings.EaseOfUnderstanding)
-        console.log(res[0].CommunityRatings.DepthOfMaterial)
-        console.log(res[0].CommunityRatings.Reliability)
-
+        // console.log(res[0].CommunityRatings.EaseOfUnderstanding)
+        // console.log(res[0].CommunityRatings.DepthOfMaterial)
+        // console.log(res[0].CommunityRatings.Reliability)
 
         await setResource(res[0])
         
         //await setUnderRating(res[0].CommunityRatings.EaseOfUnderstanding)
-
-        await setRating({...rating, "understanding": `${res[0].CommunityRatings.EaseOfUnderstanding}`})
-        //await console.log(rating)
-        await setRating({...rating, "difficulty": `${res[0].CommunityRatings.DepthOfMaterial}`})
-        await setRating({...rating, "reliability": `${res[0].CommunityRatings.Reliability}`})
-        console.log(rating)
+        // await setRating({...rating, "understanding": `${res[0].CommunityRatings.EaseOfUnderstanding}`})
+        // //await console.log(rating)
+        // await setRating({...rating, "difficulty": `${res[0].CommunityRatings.DepthOfMaterial}`})
+        // await setRating({...rating, "reliability": `${res[0].CommunityRatings.Reliability}`})
+        // console.log(rating)
       } else {
         alert(`error: ${response['status']} Failed to fetch`);
       }
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       alert("error: ", error)
     }
   }
 
   function handleRate() {
-    history.push(`/rate_resource/:resource`)
+    history.push(`/rate_resource/${resource.ID}`)
   }
 
   //console.log(parseInt(resource.CommunityRatings.EaseOfUnderstanding))
-  console.log(rating)
+  // console.log(rating)
 
   return (
     <Container maxWidth='sm'>
@@ -187,46 +195,48 @@ export function ViewResource(props) {
         <div className={classes.paper}>
           <h1 style={{margin:0}}>{resource.ID}</h1>
           <form className={classes.form} noValidate onSubmit={console.log('handleSubmit')}>
-            <h4 className={classes.resourceDisplay}>{resource.Location}</h4>
+            <a href='#'><h4 className={classes.resourceDisplay}>{resource.Location}</h4></a>
             <h4 className={classes.resourceDisplay}>{resource.TypeResource}</h4>
             <h4 className={classes.resourceDisplay}>{resource.Description}</h4>
             
             <h2 className={classes.ratingTitle}>Rating:</h2>
+            <Typography gutterBottom>Level of difficulty</Typography>
+            <Slider 
+              style={{color:"#E4816B"}}
+              ValueLabelComponent={ValueLabelComponent}
+              aria-label="custom thumb label"
+              defaultValue={3}
+              min = {0}
+              max={10}
+              disabled
+              value={(rating.difficulty)}
+            />
             <Typography gutterBottom>Ease of Understanding</Typography>
             <Slider
+              style={{color:"#4DAD3D"}}
+              
               ValueLabelComponent={ValueLabelComponent}
               aria-label="custom thumb label"
               defaultValue={3}
               min = {0}
               max={10}
               disabled
-              value={rating ? rating.understanding : 10}
-            />
-            <Typography gutterBottom>Level of difficulty</Typography>
-            <Slider
-              ValueLabelComponent={ValueLabelComponent}
-              aria-label="custom thumb label"
-              defaultValue={3}
-              min = {0}
-              max={10}
-              disabled
-              value={rating ? rating.difficulty : 10}
+              value={(rating.understanding)}
             />
             <Typography gutterBottom>Reliability</Typography>
             <Slider
+              style={{color:"#53B3CB"}}
               ValueLabelComponent={ValueLabelComponent}
               aria-label="custom thumb label"
               defaultValue={3}
               min = {0}
               max={10}
               disabled
-
-              value={rating ? rating.reliability : 10}
+              value={(rating.reliability)}
             />
           </form>
         </div>
       </Box>
-
       <div>
         <Button
           type="submit"
@@ -246,6 +256,12 @@ export function ViewResource(props) {
           Did you use this resource? Give your own rating!
         </Button>
       </div>
+      <Box bgcolor='white' color="black" className='box-generic' style={{marginTop: "20px"}}>
+        <div className={classes.paper}>
+          <h2>Community Ratings</h2>
+          <h5>It's looking empty in here</h5>
+        </div>
+      </Box>
     </Container>
   );
 }
