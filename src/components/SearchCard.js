@@ -56,8 +56,8 @@ const useStyles = makeStyles((theme) => ({
 
 export function SearchCard(props) {
   const classes = useStyles();
-  const href = `/${props.link}`;
-  const rating = `${props.rating}/10`
+  const href = `/view_resource/${props.title}`;
+  const rating = `${Math.round(props.rating,2)}/10`
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const handleToggle = () => {
@@ -93,62 +93,70 @@ export function SearchCard(props) {
   }
 
   return(
-    <Box bgcolor='white' color="black" className={classes.box} key={props.key}>
-      <div>
-        <div className={classes.cardHeader}>
-          <h2 className={classes.cardTitle}>{props.title}</h2>
-          {/* <a href={href}>
-            <u>{props.link}</u>
-          </a> */}
-          {props.owner && (
-            <>
-            <div style={{flex:1}}/>
-            <div>
-              <IconButton
-                ref={anchorRef} 
-                aria-label="more" 
-                size="medium"
-                aria-haspopup="true"
-                aria-controls={open ? 'menu-list-grow': undefined}
-                onClick={handleToggle}
-              >
-                <MoreVertIcon style={{color: '#1a181a', fontSize: '18pt'}}/>
-              </IconButton>
-              <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-                {({ TransitionProps, placement }) => (
-                  <Grow
-                    {...TransitionProps}
-                    style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+    <div>
+      <a href={props.owner ? "#" : `/view_resource/${props.title}`}>
+        <Box bgcolor='white' color="black" className={classes.box} key={props.key}>
+          <div>
+            <div className={classes.cardHeader}>
+              <h2 className={classes.cardTitle}>{props.title}</h2>
+              {/* <a href={href}>
+                <u>{props.link}</u>
+              </a> */}
+              {props.owner && (
+                <>
+                <div style={{flex:1}}/>
+                <div>
+                  <IconButton
+                    ref={anchorRef} 
+                    aria-label="more" 
+                    size="medium"
+                    aria-haspopup="true"
+                    aria-controls={open ? 'menu-list-grow': undefined}
+                    onClick={handleToggle}
                   >
-                    <Paper>
-                      <ClickAwayListener onClickAway={handleClose}>
-                        <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                          <Link to={`/${props.title}/edit_resource`}>
-                            <MenuItem onClick={handleClose} className={classes.menuItem}>Edit</MenuItem>
-                          </Link>
-                          <MenuItem onClick={handleDelete} className={classes.menuItem}>Delete</MenuItem>
-                        </MenuList>
-                      </ClickAwayListener>
-                    </Paper>
-                  </Grow>
-                )}
-              </Popper>
+                    <MoreVertIcon style={{color: '#1a181a', fontSize: '18pt'}}/>
+                  </IconButton>
+                  <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+                    {({ TransitionProps, placement }) => (
+                      <Grow
+                        {...TransitionProps}
+                        style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                      >
+                        <Paper>
+                          <ClickAwayListener onClickAway={handleClose}>
+                            <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                              <Link to={`/${props.title}/edit_resource`}>
+                                <MenuItem onClick={handleClose} className={classes.menuItem}>Edit</MenuItem>
+                              </Link>
+                              <MenuItem onClick={handleDelete} className={classes.menuItem}>Delete</MenuItem>
+                            </MenuList>
+                          </ClickAwayListener>
+                        </Paper>
+                      </Grow>
+                    )}
+                  </Popper>
+                </div>
+                </>
+              )}
             </div>
-            </>
-          )}
-        </div>
-        <p className={classes.cardText}>{props.text}</p>
-      </div>
-      <div className={classes.footer}>
-        <p className={classes.cardAuthor}>Submitted by {props.author}</p>
-        <div style={{flex:1}}/>
-        <h4 className={classes.rating}>
-          {rating}
-        </h4>
-      </div>
-      <div className={classes.footer}> 
-        <div style={{flex:1}}/>
-      </div>
-    </Box>    
+            <p className={classes.cardText}>{props.text}</p>
+          </div>
+          <div className={classes.footer}>
+            <p className={classes.cardAuthor}>Submitted by {props.author}</p>
+            <div style={{flex:1}}/>
+            <h4 className={classes.rating}>
+              {rating}
+            </h4>
+          </div>
+          <div className={classes.footer}> 
+            <div style={{flex:1}}/>
+          </div>
+        </Box>
+      </a>    
+
+
+
+    </div>
+    
   );
 }

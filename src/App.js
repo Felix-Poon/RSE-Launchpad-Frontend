@@ -65,13 +65,13 @@ function App() {
           <Route path="/:resource/edit_resource">
             <EditResource />
           </Route> 
-          <Route path="/rate_resource">
+          <Route path="/rate_resource/:resource">
             <RateResource />
           </Route>          
           <Route path="/add_resource">
             <AddResource />
           </Route>
-          <Route path="/view_resource">
+          <Route path="/view_resource/:resource">
             <ViewResource />
           </Route>
           <Route path="/login">

@@ -133,7 +133,6 @@ export function RateResource(props) {
             <h4 className={classes.resourceDisplay}>URL LINK </h4>
             <h4 className={classes.resourceDisplay}>Type of Resource </h4>
             <h4 className={classes.resourceDisplay}>Original Submitter's Description </h4>
-            
             <h2 className={classes.ratingTitle}>Rating:</h2>
             <Typography gutterBottom>Ease of Understanding</Typography>
             <Slider
