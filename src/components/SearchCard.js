@@ -60,7 +60,6 @@ export function SearchCard(props) {
   const rating = `${props.rating}/10`
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
-
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -124,7 +123,7 @@ export function SearchCard(props) {
                     <Paper>
                       <ClickAwayListener onClickAway={handleClose}>
                         <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                          <Link to={"/edit_resource"}>
+                          <Link to={`/${props.title}/edit_resource`}>
                             <MenuItem onClick={handleClose} className={classes.menuItem}>Edit</MenuItem>
                           </Link>
                           <MenuItem onClick={handleDelete} className={classes.menuItem}>Delete</MenuItem>

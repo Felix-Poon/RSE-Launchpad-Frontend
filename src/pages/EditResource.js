@@ -18,6 +18,8 @@ import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete
 import Icon from '@mdi/react'
 import { mdiRocketOutline } from '@mdi/js';
 
+import { useParams } from 'react-router-dom';
+
 
 const useStyles = makeStyles((theme) => ({
   placement: {
@@ -72,22 +74,12 @@ ValueLabelComponent.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-const marks = [
-  {
-    value: 0,
-  },
-  {
-    value: 5,
-  },
-  {
-    value: 10,
-  }
-];
 
 const filter = createFilterOptions();
 
 export function EditResource() {
   const classes = useStyles();
+  const [resource, setResource] = useState();
   const [resourceName, setResourceName] = useState("");
   const [categories, setCategories] = useState([]);
   const [description, setDescription] = useState("");
@@ -100,10 +92,58 @@ export function EditResource() {
                                         "understanding": "", 
                                         "difficulty": "", 
                                         "reliability": "" })
+  const params = useParams();
+  const firstRender = React.useRef(true);
 
-  // useEffect(() => {
-  //   console.log(categories)
-  // }, [categories])
+  console.log("use params ", params.resource)
+
+  useEffect(() => {
+    getResources();
+  }, [])
+
+  useEffect(() => {
+    if(firstRender.current){
+      firstRender.current=false;
+    } else {
+      console.log(resource)
+      setResourceName(resource[0].ID)
+      setResourceLink(resource[0].Location)
+      setResourceType(resource[0].TypeResource)
+      setResourceReview(resource[0].Review)
+      setDescription(resource[0].Description)
+      setCategories(resource[0].Categories)
+      setRating({"understanding": `${resource[0].CommunityRatings.EaseOfUnderstanding}`,
+                  "difficulty": `${resource[0].CommunityRatings.DepthOfMaterial}`,
+                  "reliability": `${resource[0].CommunityRatings.Reliability}` })
+    }
+  }, [resource])
+
+
+  async function getResources () {
+    var myHeaders = new Headers();
+    // add content type header to object
+    myHeaders.append("Content-Type", "application/json");
+    // call api to get resources based on author
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    }
+    try {
+      console.log(params.resource)
+      const response = await fetch(`https://ggvpaganoj.execute-api.ap-southeast-2.amazonaws.com/Development/resource?SearchKey=byTitle&Input=${params.resource}`, requestOptions)
+      if (response['status'] === 200) {
+        const res = await response.json();
+        await setResource(res)
+      } else {
+        alert(`error: ${response['status']} Failed to fetch`);
+      }
+    } catch (error) {
+      console.log(error)
+      alert("error: ", error)
+    }
+  }
+
 
   // define the callAPI function that takes a first name and last name as parameters
   async function handleSubmit (event) {
@@ -153,7 +193,7 @@ export function EditResource() {
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
-              defaultValue="Original TITLE"
+              value = {resourceName}
               margin="normal"
               required
               fullWidth
@@ -162,8 +202,19 @@ export function EditResource() {
               name="title"
               autoFocus
               onChange={(e) => setResourceName(e.target.value)}
-              />
-            <h4 className={classes.urlLinkDisplay}>URL LINK GOES HERE </h4>
+            />
+            <TextField
+              variant="outlined"
+              value = {resourceLink}
+              margin="normal"
+              required
+              fullWidth
+              id="title"
+              label="Title"
+              name="title"
+              autoFocus
+              onChange={(e) => setResourceLink(e.target.value)}
+            />
             <TextField 
               id="resourceType" 
               label="Type of Resource" 
@@ -178,13 +229,13 @@ export function EditResource() {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value="Book">Book</MenuItem>
-              <MenuItem value="Video">Video</MenuItem>
-              <MenuItem value="Website">Website</MenuItem>
-              <MenuItem value="Podcast">Podcast</MenuItem>
-              <MenuItem value="Other">Other</MenuItem>
+              <MenuItem value="book">Book</MenuItem>
+              <MenuItem value="video">Video</MenuItem>
+              <MenuItem value="website">Website</MenuItem>
+              <MenuItem value="podcast">Podcast</MenuItem>
+              <MenuItem value="other">Other</MenuItem>
             </TextField>
-            {resourceType === "Other" && (
+            {resourceType === "other" && (
               <TextField
               id="userResourceType"
               label="Tell us the resource type?"
@@ -197,7 +248,7 @@ export function EditResource() {
               />
               )}
             <TextField
-              defaultValue="Original Description"
+              value={description}
               variant="outlined"
               margin="normal"
               multiline
@@ -210,7 +261,7 @@ export function EditResource() {
               onChange={(e) => setDescription(e.target.value)}
               />
             <TextField
-              defaultValue="Original Review"
+              value={resourceReview}
               variant="outlined"
               margin="normal"
               multiline
@@ -223,7 +274,6 @@ export function EditResource() {
               onChange={(e) => setResourceReview(e.target.value)}
               />
             <Autocomplete
-              defaultValue={[resourceTags[4]]}
               margin="normal"
               fullWidth
               id="categories"
@@ -266,33 +316,33 @@ export function EditResource() {
                 />
                 )}
                 onChange={(e, val) => setCategories(val)}
-                />
+              />
             <h2>Rating:</h2>
             <Typography gutterBottom>Ease of Understanding</Typography>
             <Slider
               ValueLabelComponent={ValueLabelComponent}
               aria-label="custom thumb label"
-              defaultValue={3}
-              min = {1}
-              max={5}
+              value={(rating.understanding)}
+              min = {0}
+              max={10}
               onChange = {(e, val) => setRating({...rating, "understanding": `${val}`})}
               />
             <Typography gutterBottom>Level of difficulty</Typography>
             <Slider
               ValueLabelComponent={ValueLabelComponent}
               aria-label="custom thumb label"
-              defaultValue={3}
-              min = {1}
-              max={5}
+              value={(rating.difficulty)}
+              min = {0}
+              max={10}
               onChange = {(e, val) => setRating({...rating, "difficulty": `${val}`})}
               />
             <Typography gutterBottom>Reliability</Typography>
             <Slider
               ValueLabelComponent={ValueLabelComponent}
               aria-label="custom thumb label"
-              defaultValue={3}
-              min = {1}
-              max={5}
+              value={(rating.reliability)}
+              min = {0}
+              max={10}
               onChange = {(e, val) => setRating({...rating, "reliability": `${val}`})}
               />
             <div>

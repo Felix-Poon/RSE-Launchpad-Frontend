@@ -191,11 +191,11 @@ export function AddResource() {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value="Book">Book</MenuItem>
-              <MenuItem value="Video">Video</MenuItem>
-              <MenuItem value="Website">Website</MenuItem>
-              <MenuItem value="Podcast">Podcast</MenuItem>
-              <MenuItem value="Other">Other</MenuItem>
+              <MenuItem value="book">Book</MenuItem>
+              <MenuItem value="video">Video</MenuItem>
+              <MenuItem value="website">Website</MenuItem>
+              <MenuItem value="podcast">Podcast</MenuItem>
+              <MenuItem value="other">Other</MenuItem>
             </TextField>
             {resourceType === "Other" && (
               <TextField
