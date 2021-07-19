@@ -17,7 +17,7 @@ import { Typography, Slider, Tooltip } from '@material-ui/core';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import Icon from '@mdi/react'
 import { mdiRocketOutline } from '@mdi/js';
-
+import { useLocation } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -80,7 +80,7 @@ ValueLabelComponent.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-const marks = [
+/* const marks = [
   {
     value: 0,
   },
@@ -90,56 +90,99 @@ const marks = [
   {
     value: 10,
   }
-];
+]; */
 
 const filter = createFilterOptions();
 
 export function ViewResource(props) {
   const classes = useStyles();
   const history = useHistory();
-
+  const location = useLocation();
   const [rating, setRating] = useState({
-                                        "understanding": "3", 
-                                        "difficulty": "3", 
-                                        "reliability": "3" })
+                                        "understanding": "0", 
+                                        "difficulty": "0", 
+                                        "reliability": "0" })
+  const [resource, setResource] = React.useState([]);
+  const firstRender = React.useRef(true);
+
+  // Get title from URL
+  console.log(location.pathname)
+  const path = location.pathname.split('/').pop()
+  console.log(path)
+
+  React.useEffect(() => {
+    if(firstRender.current) {
+      firstRender.current = false;
+    } else {
+      console.log(resource)
+    }
+  },[resource])
+
+  React.useEffect(() => {
+    renderResource();
+  },[])
 
   // define the callAPI function that takes a first name and last name as parameters
-  async function handleSubmit (event) {
-    event.preventDefault();
-
+  async function renderResource() {;
     // instantiate a headers object
     var myHeaders = new Headers();
     // add content type header to object
     myHeaders.append("Content-Type", "application/json");
-    // using built in JSON utility package turn object to string and store in a variable
-    var raw = JSON.stringify ({
-        rating: rating,
-    });
-    // create a JSON object with parameters for API call and store in a variable
+    // call api to get resources based on author
     var requestOptions = {
-        method: 'GET',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
-    };
-    // make API call with parameters and use promises to get response
-    const response = await fetch("https://ggvpaganoj.execute-api.ap-southeast-2.amazonaws.com/Development/resource", requestOptions)
-    console.log(response.json());
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    }
+    /* // make API call with parameters and use promises to get response
+    const response = await fetch(`https://ggvpaganoj.execute-api.ap-southeast-2.amazonaws.com/Development/resource?SearchKey=byTitle&Input=${path}`, requestOptions)
+    console.log(response.json()); */
+    try {
+      const response = await fetch(`https://ggvpaganoj.execute-api.ap-southeast-2.amazonaws.com/Development/resource?SearchKey=byTitle&Input=${path}`, requestOptions)
+      console.log(response)
+      console.log(response.status)
+      //console.log(response.json())
+      if (response['status'] === 200) {
+        const res = await response.json();
+        console.log(res[0])
+
+        console.log(res[0].CommunityRatings.EaseOfUnderstanding)
+        console.log(res[0].CommunityRatings.DepthOfMaterial)
+        console.log(res[0].CommunityRatings.Reliability)
+
+
+        await setResource(res[0])
+        await setRating({...rating, "understanding": `${res[0].CommunityRatings.EaseOfUnderstanding}`})
+        //console.log(rating)
+        await setRating({...rating, "difficulty": `${res[0].CommunityRatings.DepthOfMaterial}`})
+        await setRating({...rating, "reliability": `${res[0].CommunityRatings.Reliability}`})
+        console.log(rating)
+      } else {
+        alert(`error: ${response['status']} Failed to fetch`);
+      }
+    } catch (error) {
+      console.log(error)
+      alert("error: ", error)
+    }
   }
 
   function handleRate() {
     history.push(`/rate_resource/:resource`)
   }
 
+  //console.log(parseInt(resource.CommunityRatings.EaseOfUnderstanding))
+  console.log(rating.understanding)
+  console.log(rating)
+
   return (
     <Container maxWidth='sm'>
       <Box bgcolor='white' color="black" className='box-generic'>
         <div className={classes.paper}>
-          <h1 style={{margin:0}}>TITLE</h1>
-          <form className={classes.form} noValidate onSubmit={handleSubmit}>
-            <h4 className={classes.resourceDisplay}>URL LINK </h4>
-            <h4 className={classes.resourceDisplay}>Type of Resource </h4>
-            <h4 className={classes.resourceDisplay}>Original Submitter's Description </h4>
+          <h1 style={{margin:0}}>{resource.ID}</h1>
+          <form className={classes.form} noValidate onSubmit={console.log('handleSubmit')}>
+            <h4 className={classes.resourceDisplay}>{resource.Location}</h4>
+            <h4 className={classes.resourceDisplay}>{resource.TypeResource}</h4>
+            <h4 className={classes.resourceDisplay}>{resource.Description}</h4>
             
             <h2 className={classes.ratingTitle}>Rating:</h2>
             <Typography gutterBottom>Ease of Understanding</Typography>
@@ -148,9 +191,9 @@ export function ViewResource(props) {
               aria-label="custom thumb label"
               defaultValue={3}
               min = {0}
-              max={5}
+              max={10}
               disabled
-              onChange = {(e, val) => setRating({...rating, "understanding": `${val}`})}
+              value={rating.understanding ? rating.understanding : 10}
             />
             <Typography gutterBottom>Level of difficulty</Typography>
             <Slider
@@ -158,9 +201,9 @@ export function ViewResource(props) {
               aria-label="custom thumb label"
               defaultValue={3}
               min = {0}
-              max={5}
+              max={10}
               disabled
-              onChange = {(e, val) => setRating({...rating, "difficulty": `${val}`})}
+              value={rating.difficulty ? rating.difficulty : 10}
             />
             <Typography gutterBottom>Reliability</Typography>
             <Slider
@@ -168,9 +211,9 @@ export function ViewResource(props) {
               aria-label="custom thumb label"
               defaultValue={3}
               min = {0}
-              max={5}
+              max={10}
               disabled
-              onChange = {(e, val) => setRating({...rating, "reliability": `${val}`})}
+              value={rating.reliability ? rating.reliability : 10}
             />
           </form>
         </div>
