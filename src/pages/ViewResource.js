@@ -158,12 +158,12 @@ export function ViewResource(props) {
 
         await setResource(res[0])
         
-        await setUnderRating(res[0].CommunityRatings.EaseOfUnderstanding)
+        //await setUnderRating(res[0].CommunityRatings.EaseOfUnderstanding)
 
-        //await setRating({...rating, "understanding": `${res[0].CommunityRatings.EaseOfUnderstanding}`})
-        await console.log(rating)
-        //await setRating({...rating, "difficulty": `${res[0].CommunityRatings.DepthOfMaterial}`})
-        //await setRating({...rating, "reliability": `${res[0].CommunityRatings.Reliability}`})
+        await setRating({...rating, "understanding": `${res[0].CommunityRatings.EaseOfUnderstanding}`})
+        //await console.log(rating)
+        await setRating({...rating, "difficulty": `${res[0].CommunityRatings.DepthOfMaterial}`})
+        await setRating({...rating, "reliability": `${res[0].CommunityRatings.Reliability}`})
         console.log(rating)
       } else {
         alert(`error: ${response['status']} Failed to fetch`);
