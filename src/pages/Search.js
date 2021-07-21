@@ -11,6 +11,7 @@ import classNames from "classnames";
 import { mdiRocket } from '@mdi/js';
 import Icon from '@mdi/react';
 import { useHistory, useParams } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -105,23 +106,20 @@ export function Search() {
   const [searchValue, setSearchValue] = React.useState([]);
   const history = useHistory();
   const [resources, setResources] = React.useState([]);
-  const firstRender = React.useRef(true);
-
+  const [loading, setLoading] = React.useState(false)
   // Make array from URL path
   const path = location.pathname.split('/').pop()
   const searchArr = path.split('&')
+
   // Make tags to be rendered in search bar
   //const tags = [];
   /* searchArr.forEach(label => {
     tags.push({title:label})
   }) */
+
   React.useEffect(() => {
-    if(firstRender.current) {
-      firstRender.current = false;
-    } else {
-      console.log(resources)
-    }
-  },[resources])
+    getResources();
+  },[loading])
 
   React.useEffect(() => {
     getResources();
@@ -142,6 +140,7 @@ export function Search() {
       const response = await fetch(`https://ggvpaganoj.execute-api.ap-southeast-2.amazonaws.com/Development/resource?SearchKey=standardInput&Input=${searchArr}`, requestOptions)
       if (response['status'] === 200) {
         const res = await response.json();
+        console.log("get result: ", res)
         await setResources(res)
       } else {
         alert(`error: ${response['status']} Failed to fetch`);
@@ -153,15 +152,16 @@ export function Search() {
   }
 
   //console.log(tags)
-  console.log(searchArr)
+  // console.log(searchArr)
 
   // Creates query & redirects to search results
   function handleSearch(event) {
     event.preventDefault();
-    console.log('click', event)
+    // console.log('click', event)
     const query = searchQuery(searchValue)
     console.log(query)
     history.push(`/search/${query}`);
+    setLoading((prev) => !prev)
   }
 
 
@@ -244,20 +244,20 @@ export function Search() {
           Search results for {searchArr.join(', ')}
         </h2>
         {resources.length ? null : <p style={{margin:'0 40px'}}>No resources found</p>}
-          <>
-            {resources.map((val, idx) => {
-              return (
-                <SearchCard 
-                key={idx}
-                title= {val.ID}
-                link={val.Location}
-                text={val.Description}
-                author={val.Author}
-                rating={val.CommunityRatings.Overall}
-              />
-              )
-            })}
-          </>
+
+        {resources.map((val, idx) => {
+          return (
+            <SearchCard 
+            key={idx}
+            title= {val.ID}
+            link={val.Location}
+            text={val.Description}
+            author={val.Author}
+            rating={val.CommunityRatings.Overall}
+          />
+          )
+        })}
+
       </div>
       
       </div>
