@@ -19,6 +19,7 @@ import Icon from '@mdi/react'
 import { mdiRocketOutline } from '@mdi/js';
 
 import { useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -88,14 +89,13 @@ export function EditResource() {
   const [userResourceType, setUserResourceType] = useState("");
   const [resourceReview, setResourceReview] = useState("");
   const [rating, setRating] = useState({
-                                        "overall": "",
-                                        "understanding": "", 
-                                        "difficulty": "", 
-                                        "reliability": "" })
+                                        "Overall": "",
+                                        "EaseOfUnderstanding": "", 
+                                        "DepthOfMaterial": "", 
+                                        "Reliability": "" })
   const params = useParams();
+  const history = useHistory();
   const firstRender = React.useRef(true);
-
-  console.log("use params ", params.resource)
 
   useEffect(() => {
     getResources();
@@ -106,15 +106,16 @@ export function EditResource() {
       firstRender.current=false;
     } else {
       console.log(resource)
-      setResourceName(resource[0].ID)
-      setResourceLink(resource[0].Location)
-      setResourceType(resource[0].TypeResource)
-      setResourceReview(resource[0].Review)
-      setDescription(resource[0].Description)
-      setCategories(resource[0].Categories)
-      setRating({"understanding": `${resource[0].CommunityRatings.EaseOfUnderstanding}`,
-                  "difficulty": `${resource[0].CommunityRatings.DepthOfMaterial}`,
-                  "reliability": `${resource[0].CommunityRatings.Reliability}` })
+      setResourceName(resource.ID)
+      setResourceLink(resource.Location)
+      setResourceType(resource.TypeResource)
+      setResourceReview(resource.Review)
+      setDescription(resource.Description)
+      setCategories(resource.Categories)
+      setRating({ "Overall": `${resource.CommunityRatings.Overall}`,
+                  "EaseOfUnderstanding": `${resource.CommunityRatings.EaseOfUnderstanding}`,
+                  "DepthOfMaterial": `${resource.CommunityRatings.DepthOfMaterial}`,
+                  "Reliability": `${resource.CommunityRatings.Reliability}` })
     }
   }, [resource])
 
@@ -134,7 +135,7 @@ export function EditResource() {
       const response = await fetch(`https://ggvpaganoj.execute-api.ap-southeast-2.amazonaws.com/Development/resource?SearchKey=byTitle&Input=${params.resource}`, requestOptions)
       if (response['status'] === 200) {
         const res = await response.json();
-        await setResource(res)
+        await setResource(res[0])
       } else {
         alert(`error: ${response['status']} Failed to fetch`);
       }
@@ -162,18 +163,35 @@ export function EditResource() {
     // add content type header to object
     myHeaders.append("Content-Type", "application/json");
     // using built in JSON utility package turn object to string and store in a variable
+
     var raw = JSON.stringify ({
       name: resourceName,
+      newName: "",
       resourceType: resourceType,
       location: resourceLink,
       description: description,
       review: resourceReview,
       categories: uploadCategories,
-      rating: rating
+      rating: rating,
+      author: localStorage.getItem('userName')
     });
+
+    if (resourceName !== params.resource) {
+      var raw = JSON.stringify ({
+        name: params.resource,
+        newName: resourceName,
+        resourceType: resourceType,
+        location: resourceLink,
+        description: description,
+        review: resourceReview,
+        categories: uploadCategories,
+        rating: rating,
+        author: localStorage.getItem('userName')
+      });
+    }
     // create a JSON object with parameters for API call and store in a variable
     var requestOptions = {
-        method: 'POST',
+        method: 'PUT',
         headers: myHeaders,
         body: raw,
         redirect: 'follow'
@@ -185,188 +203,187 @@ export function EditResource() {
 
   return (
     <div className={classes.placement}>
-
-    <Container maxWidth='sm'>
-      <Box bgcolor='white' color="black" className='box-generic'>
-        <div className={classes.paper}>
-          <h1>Edit your resource below: </h1>
-          <form className={classes.form} noValidate onSubmit={handleSubmit}>
-            <TextField
-              variant="outlined"
-              value = {resourceName}
-              margin="normal"
-              required
-              fullWidth
-              id="title"
-              label="Title"
-              name="title"
-              autoFocus
-              onChange={(e) => setResourceName(e.target.value)}
-            />
-            <TextField
-              variant="outlined"
-              value = {resourceLink}
-              margin="normal"
-              required
-              fullWidth
-              id="title"
-              label="Title"
-              name="title"
-              autoFocus
-              onChange={(e) => setResourceLink(e.target.value)}
-            />
-            <TextField 
-              id="resourceType" 
-              label="Type of Resource" 
-              value={resourceType}
-              select
-              fullWidth
-              variant="outlined"
-              required
-              margin="normal"
-              onChange = {(e) => setResourceType(e.target.value)}
-              >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value="book">Book</MenuItem>
-              <MenuItem value="video">Video</MenuItem>
-              <MenuItem value="website">Website</MenuItem>
-              <MenuItem value="podcast">Podcast</MenuItem>
-              <MenuItem value="other">Other</MenuItem>
-            </TextField>
-            {resourceType === "other" && (
+      <Container maxWidth='sm'>
+        <Box bgcolor='white' color="black" className='box-generic'>
+          <div className={classes.paper}>
+            <h1>Edit your resource below: </h1>
+            <form className={classes.form} noValidate onSubmit={handleSubmit}>
               <TextField
-              id="userResourceType"
-              label="Tell us the resource type?"
-              name="userResourceType"
-              fullWidth
-              variant="outlined"
-              margin="normal"
-              value={userResourceType}
-              onChange={(e) => setUserResourceType(e.target.value)}
-              />
-              )}
-            <TextField
-              value={description}
-              variant="outlined"
-              margin="normal"
-              multiline
-              rows={5}
-              fullWidth
-              id="description"
-              label="Description"
-              name="description"
-              autoFocus
-              onChange={(e) => setDescription(e.target.value)}
-              />
-            <TextField
-              value={resourceReview}
-              variant="outlined"
-              margin="normal"
-              multiline
-              rows={3}
-              fullWidth
-              id="review"
-              label="Review"
-              name="review"
-              autoFocus
-              onChange={(e) => setResourceReview(e.target.value)}
-              />
-            <Autocomplete
-              margin="normal"
-              fullWidth
-              id="categories"
-              label="Add tags"
-              name="categories"
-              multiple
-              options={resourceTags}
-              getOptionLabel={(option) => {
-                // Value selected with enter, right from the input
-                if (typeof option === "string") {
-                  return option;
-                }
-                // Add "xxx" option created dynamically
-                if (option.inputValue) {
-                  return option.inputValue;
-                }
-                // Regular option
-                return option.title;
-              }}
-              filterOptions={(options, params) => {
-                const filtered = filter(options, params);
-                // Suggest the creation of a new value
-                if (params.inputValue !== "") {
-                  filtered.push({
-                    inputValue: params.inputValue,
-                    title: `Add "${params.inputValue}"`
-                  });
-                }
-                
-                return filtered;
-              }}
-              autoFocus
-              filterSelectedOptions
-              renderOption={(option) => option.title}
-              renderInput={(params) => (
-                <TextField
-                {...params}
                 variant="outlined"
-                label="Add tags"
+                value = {resourceName}
+                margin="normal"
+                required
+                fullWidth
+                id="title"
+                label="Title"
+                name="title"
+                autoFocus
+                onChange={(e) => setResourceName(e.target.value)}
+              />
+              <TextField
+                variant="outlined"
+                value = {resourceLink}
+                margin="normal"
+                required
+                fullWidth
+                id="title"
+                label="Title"
+                name="title"
+                autoFocus
+                onChange={(e) => setResourceLink(e.target.value)}
+              />
+              <TextField 
+                id="resourceType" 
+                label="Type of Resource" 
+                value={resourceType}
+                select
+                fullWidth
+                variant="outlined"
+                required
+                margin="normal"
+                onChange = {(e) => setResourceType(e.target.value)}
+                >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value="book">Book</MenuItem>
+                <MenuItem value="video">Video</MenuItem>
+                <MenuItem value="website">Website</MenuItem>
+                <MenuItem value="podcast">Podcast</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </TextField>
+              {resourceType === "other" && (
+                <TextField
+                id="userResourceType"
+                label="Tell us the resource type?"
+                name="userResourceType"
+                fullWidth
+                variant="outlined"
+                margin="normal"
+                value={userResourceType}
+                onChange={(e) => setUserResourceType(e.target.value)}
                 />
                 )}
-                onChange={(e, val) => setCategories(val)}
-              />
-            <h2>Rating:</h2>
-            <Typography gutterBottom>Ease of Understanding</Typography>
-            <Slider
-              ValueLabelComponent={ValueLabelComponent}
-              aria-label="custom thumb label"
-              value={(rating.understanding)}
-              min = {0}
-              max={10}
-              onChange = {(e, val) => setRating({...rating, "understanding": `${val}`})}
-              />
-            <Typography gutterBottom>Level of difficulty</Typography>
-            <Slider
-              ValueLabelComponent={ValueLabelComponent}
-              aria-label="custom thumb label"
-              value={(rating.difficulty)}
-              min = {0}
-              max={10}
-              onChange = {(e, val) => setRating({...rating, "difficulty": `${val}`})}
-              />
-            <Typography gutterBottom>Reliability</Typography>
-            <Slider
-              ValueLabelComponent={ValueLabelComponent}
-              aria-label="custom thumb label"
-              value={(rating.reliability)}
-              min = {0}
-              max={10}
-              onChange = {(e, val) => setRating({...rating, "reliability": `${val}`})}
-              />
-            <div>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                className={classes.submit}
+              <TextField
+                value={description}
+                variant="outlined"
+                margin="normal"
+                multiline
+                rows={5}
                 fullWidth
-                style={{margin: '25px 0 0 0', fontSize: '1.25rem'}}
-              >
-                Edit Resource
-                <Icon path={mdiRocketOutline}
-                  size={1.5}
-                  color="white"
-                  rotate='90'
-                  style={{margin: '0 0 0 10px'}}
+                id="description"
+                label="Description"
+                name="description"
+                autoFocus
+                onChange={(e) => setDescription(e.target.value)}
                 />
-              </Button>
-            </div>
-          </form>
-        </div>
-      </Box>
-    </Container>
+              <TextField
+                value={resourceReview}
+                variant="outlined"
+                margin="normal"
+                multiline
+                rows={3}
+                fullWidth
+                id="review"
+                label="Review"
+                name="review"
+                autoFocus
+                onChange={(e) => setResourceReview(e.target.value)}
+                />
+              <Autocomplete
+                margin="normal"
+                fullWidth
+                id="categories"
+                label="Add tags"
+                name="categories"
+                multiple
+                options={resourceTags}
+                getOptionLabel={(option) => {
+                  // Value selected with enter, right from the input
+                  if (typeof option === "string") {
+                    return option;
+                  }
+                  // Add "xxx" option created dynamically
+                  if (option.inputValue) {
+                    return option.inputValue;
+                  }
+                  // Regular option
+                  return option.title;
+                }}
+                filterOptions={(options, params) => {
+                  const filtered = filter(options, params);
+                  // Suggest the creation of a new value
+                  if (params.inputValue !== "") {
+                    filtered.push({
+                      inputValue: params.inputValue,
+                      title: `Add "${params.inputValue}"`
+                    });
+                  }
+                  
+                  return filtered;
+                }}
+                autoFocus
+                filterSelectedOptions
+                renderOption={(option) => option.title}
+                renderInput={(params) => (
+                  <TextField
+                  {...params}
+                  variant="outlined"
+                  label="Add tags"
+                  />
+                  )}
+                  onChange={(e, val) => setCategories(val)}
+                />
+              <h2>Rating:</h2>
+              <Typography gutterBottom>Ease of Understanding</Typography>
+              <Slider
+                ValueLabelComponent={ValueLabelComponent}
+                aria-label="custom thumb label"
+                value={(rating.EaseOfUnderstanding)}
+                min = {0}
+                max={10}
+                onChange = {(e, val) => setRating({...rating, "EaseOfUnderstanding": `${val}`})}
+                />
+              <Typography gutterBottom>Level of difficulty</Typography>
+              <Slider
+                ValueLabelComponent={ValueLabelComponent}
+                aria-label="custom thumb label"
+                value={(rating.DepthOfMaterial)}
+                min = {0}
+                max={10}
+                onChange = {(e, val) => setRating({...rating, "DepthOfMaterial": `${val}`})}
+                />
+              <Typography gutterBottom>Reliability</Typography>
+              <Slider
+                ValueLabelComponent={ValueLabelComponent}
+                aria-label="custom thumb label"
+                value={(rating.Reliability)}
+                min = {0}
+                max={10}
+                onChange = {(e, val) => setRating({...rating, "Reliability": `${val}`})}
+                />
+              <div>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  fullWidth
+                  style={{margin: '25px 0 0 0', fontSize: '1.25rem'}}
+                >
+                  Edit Resource
+                  <Icon path={mdiRocketOutline}
+                    size={1.5}
+                    color="white"
+                    rotate='90'
+                    style={{margin: '0 0 0 10px'}}
+                  />
+                </Button>
+              </div>
+            </form>
+          </div>
+        </Box>
+      </Container>
     </div>
   );
 }
