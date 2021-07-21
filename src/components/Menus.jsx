@@ -84,8 +84,6 @@ export function LogoutMenu() {
   const history = useHistory();
 
   const letter = usernameToken.charAt(0);
-  console.log(letter)
-
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);

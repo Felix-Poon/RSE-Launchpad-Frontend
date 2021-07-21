@@ -41,14 +41,6 @@ export function Header() {
     setUsernameToken(localStorage.getItem('userName'))
   }
   
-  React.useEffect(() => {
-    console.log("logout/login check: ", context)
-  },[context])
-
-  /* Check if user logged in */
-  let menu = usernameToken !== '' ? logoutMenu : loginMenu;
-  console.log("menu token: ", usernameToken)
-
   return(
 
     <AppBar position="static" color="transparent" className={classes.root}>

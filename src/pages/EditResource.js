@@ -115,7 +115,8 @@ export function EditResource() {
       setRating({ "Overall": `${resource.CommunityRatings.Overall}`,
                   "EaseOfUnderstanding": `${resource.CommunityRatings.EaseOfUnderstanding}`,
                   "DepthOfMaterial": `${resource.CommunityRatings.DepthOfMaterial}`,
-                  "Reliability": `${resource.CommunityRatings.Reliability}` })
+                  "Reliability": `${resource.CommunityRatings.Reliability}`,
+                  "NumberOfUsersRated": '1' })
     }
   }, [resource])
 
@@ -199,6 +200,7 @@ export function EditResource() {
     // make API call with parameters and use promises to get response
     const response = await fetch("https://ggvpaganoj.execute-api.ap-southeast-2.amazonaws.com/Development/resource", requestOptions)
     console.log(response);
+    history.push('/user/resources')
   }
 
   return (

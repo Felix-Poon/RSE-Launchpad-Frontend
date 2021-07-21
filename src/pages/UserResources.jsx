@@ -69,11 +69,6 @@ export function UserResources() {
   },[resources])
 
 
-  // React.useEffect(() => {
-  //   getResources();
-  //   //console.log(usernameToken)
-  // },[])
-
   async function deleteResource (ID) {
     var myHeaders = new Headers();
     // add content type header to object
@@ -122,9 +117,10 @@ export function UserResources() {
       const response = await fetch(`https://ggvpaganoj.execute-api.ap-southeast-2.amazonaws.com/Development/resource?SearchKey=author&Input=${usernameToken}`, requestOptions)
       if (response['status'] === 200) {
         const res = await response.json();
+        console.log("res from user: ", res)
         await setResources(res)
       } else {
-        alert(`error: ${response['status']} Failed to fetch`);
+        alert(`error: ${response.errorMessage} Failed to fetch`);
       }
     } catch (error) {
       console.log(error)
