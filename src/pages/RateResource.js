@@ -129,17 +129,20 @@ export function RateResource(props) {
     myHeaders.append("Content-Type", "application/json");
     // using built in JSON utility package turn object to string and store in a variable
     var raw = JSON.stringify ({
-        rating: rating,
+        ResourceID: resource.ID,
+        EOU_Rating: rating.understanding,
+        R_Rating: rating.reliability,
+        DOM_Rating: rating.difficulty
     });
     // create a JSON object with parameters for API call and store in a variable
     var requestOptions = {
-        method: 'POST',
+        method: 'PATCH',
         headers: myHeaders,
         body: raw,
         redirect: 'follow'
     };
     // make API call with parameters and use promises to get response
-    const response = await fetch("https://ggvpaganoj.execute-api.ap-southeast-2.amazonaws.com/Development/resource", requestOptions)
+    const response = await fetch("https://ggvpaganoj.execute-api.ap-southeast-2.amazonaws.com/Development/rate-resource", requestOptions)
     console.log(response);
   }
 
