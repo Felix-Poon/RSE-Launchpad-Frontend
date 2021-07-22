@@ -247,12 +247,13 @@ export function Search() {
 
         {resources.map((val, idx) => {
           return (
-            <SearchCard 
-            key={idx}
+            <SearchCard
+            key={idx} 
             title= {val.ID}
             link={val.Location}
             text={val.Description}
             author={val.Author}
+            categories={val.Categories}
             rating={val.CommunityRatings.Overall}
           />
           )

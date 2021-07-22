@@ -147,6 +147,7 @@ export function UserResources() {
                 title= {val.ID}
                 link={val.Location}
                 text={val.Description}
+                categories={val.Categories}
                 author={val.Author}
                 rating={val.CommunityRatings.Overall}
               />

@@ -50,6 +50,11 @@ const useStyles = makeStyles((theme) => ({
   rating: {
     margin: '20px 0 0 0',
     float: 'right'
+  },
+  tagContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
   }
 }));
 
@@ -63,6 +68,8 @@ export function SearchCard(props) {
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
+
+  console.log(props.categories)
 
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
@@ -140,6 +147,12 @@ export function SearchCard(props) {
               )}
             </div>
             <p className={classes.cardText}>{props.text}</p>
+          </div>
+          <h3>Tags</h3>
+          <div className={classes.tagContainer}>
+            {props.categories.map((val) => {
+              return (<p style={{margin:'0px 5px'}}>{val}</p>)
+            })}
           </div>
           <div className={classes.footer}>
             <p className={classes.cardAuthor}>Submitted by {props.author}</p>
