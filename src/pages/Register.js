@@ -189,14 +189,14 @@ export function Register() {
                         onChange =  {(e) => setConfirmPass(e.target.value)}
                       />
                     </Grid>
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                       <FormControlLabel
                         control={<Checkbox value="allowExtraEmails" color="primary" />}
                         label="I want to receive inspiration, marketing promotions and updates via email."
                         style={{textAlign:'left'}}
 
                       />
-                    </Grid>
+                    </Grid> */}
                   </Grid>
                   <Button
                     type="submit"
