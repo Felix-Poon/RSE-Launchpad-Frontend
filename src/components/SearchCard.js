@@ -69,7 +69,7 @@ export function SearchCard(props) {
     setOpen((prevOpen) => !prevOpen);
   };
 
-  console.log(props.categories)
+  // console.log(props.categories)
 
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {

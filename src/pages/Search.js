@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
 function searchQuery(array) {
   let titles = [];
   array.forEach(value => titles.push(value.title));
-  const query = titles.join('&');
+  const query = titles.join(',');
   return query;
 }
 
@@ -109,13 +109,16 @@ export function Search() {
   const [loading, setLoading] = React.useState(false)
   // Make array from URL path
   const path = location.pathname.split('/').pop()
-  const searchArr = path.split('&')
+  console.log("p: ", path)
+  const searchArr = path.split(',')
 
   // Make tags to be rendered in search bar
-  //const tags = [];
-  /* searchArr.forEach(label => {
-    tags.push({title:label})
-  }) */
+  // const tags = [];
+  // searchArr.forEach(label => {
+  //   tags.push(label)
+  // })
+
+  // console.log("tags: ", tags)
 
   React.useEffect(() => {
     getResources();
@@ -127,6 +130,7 @@ export function Search() {
 
   // call api to get resources
   async function getResources () {
+    console.log("getting resources")
     var myHeaders = new Headers();
     // add content type header to object
     myHeaders.append("Content-Type", "application/json");
@@ -137,7 +141,8 @@ export function Search() {
       redirect: 'follow'
     }
     try {
-      const response = await fetch(`https://ggvpaganoj.execute-api.ap-southeast-2.amazonaws.com/Development/resource?SearchKey=standardInput&Input=${searchArr}`, requestOptions)
+      console.log(`https://ggvpaganoj.execute-api.ap-southeast-2.amazonaws.com/Development/resource?SearchKey=standardInput&Input=${path}`)
+      const response = await fetch(`https://ggvpaganoj.execute-api.ap-southeast-2.amazonaws.com/Development/resource?SearchKey=standardInput&Input=${path}`, requestOptions)
       if (response['status'] === 200) {
         const res = await response.json();
         console.log("get result: ", res)

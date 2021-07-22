@@ -118,7 +118,7 @@ export function Homepage() {
   function searchQuery(array) {
     let titles = [];
     array.forEach(value => titles.push(value.title));
-    const query = titles.join('&');
+    const query = titles.join(',');
     return query;
   }
 
