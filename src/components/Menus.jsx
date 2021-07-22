@@ -155,8 +155,8 @@ export function LogoutMenu() {
                     <a href="/user/resources">
                       <MenuItem onClick={handleClose} className={classes.menuItem}>Your resources</MenuItem>
                     </a>
-                    <MenuItem onClick={handleClose} className={classes.menuItem}>Your ratings</MenuItem>
-                    <MenuItem onClick={handleClose} className={classes.menuItem}>Account settings</MenuItem>
+                    {/* <MenuItem onClick={handleClose} className={classes.menuItem}>Your ratings</MenuItem>
+                    <MenuItem onClick={handleClose} className={classes.menuItem}>Account settings</MenuItem> */}
                     <hr style={{borderColor:'lightgrey', borderBottom: 0}}/>
                     <MenuItem onClick={handleLogout} className={classes.menuItem}>Log Out</MenuItem>
                   </MenuList>

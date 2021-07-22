@@ -54,14 +54,24 @@ const useStyles = makeStyles((theme) => ({
     border: 1,
   },
   resourceDisplay: {
-      textAlign: 'left',
-      paddingLeft: 10
+    textAlign: 'left',
+    padding: '0px 10px 15px 10px',
+    border: '1px solid rgba(139,7,189,1)',
+    borderRadius: '10px',
+    marginTop: '10px'
   },
   ratingTitle: {
     textAlign: 'left',
     paddingLeft: 10,
     paddingTop: 10,
   },
+  locationDisplay: {
+    textAlign: 'left',
+    padding: '2px 10px 15px 10px',
+    border: '1px solid rgba(139,7,189,1)',
+    borderRadius: '10px',
+    marginTop: '10px'
+  }
   
 }));
 
@@ -108,6 +118,7 @@ export function ViewResource(props) {
   //const [diffRating, set]
   const [resource, setResource] = React.useState([]);
   const firstRender = React.useRef(true);
+  const [validLocation, setValidLocation] = React.useState(false);
 
   // Get title from URL
   // console.log(location.pathname)
@@ -121,6 +132,10 @@ export function ViewResource(props) {
       setRating({"understanding": `${resource.CommunityRatings.EaseOfUnderstanding}`,
                   "difficulty": `${resource.CommunityRatings.DepthOfMaterial}`,
                   "reliability": `${resource.CommunityRatings.Reliability}` })
+
+      if(validURL(resource.Location)) {
+        setValidLocation(true);
+      }
     }
   },[resource])
 
@@ -182,6 +197,17 @@ export function ViewResource(props) {
     }
   }
 
+  function validURL(str) {
+    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+      '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    return !!pattern.test(str);
+  }
+
+
   function handleRate() {
     history.push(`/rate_resource/${resource.ID}`)
   }
@@ -195,9 +221,21 @@ export function ViewResource(props) {
         <div className={classes.paper}>
           <h1 style={{margin:0}}>{resource.ID}</h1>
           <form className={classes.form} noValidate onSubmit={console.log('handleSubmit')}>
-            <a href='#'><h4 className={classes.resourceDisplay}>{resource.Location}</h4></a>
-            <h4 className={classes.resourceDisplay}>{resource.TypeResource}</h4>
-            <h4 className={classes.resourceDisplay}>{resource.Description}</h4>
+            <div className={classes.locationDisplay}>
+              <h4 style={{marginBottom: 5, marginTop: 10}}>Find this resource at: </h4>
+              {validLocation 
+                ? <a href={resource.Location} target="_blank">{resource.Location}</a>
+                : <a href='#'>{resource.Location}</a>
+              }
+            </div>
+            <div className={classes.resourceDisplay}>
+              <h4 style={{marginBottom: 5, marginTop: 10}}>Resource Type</h4>
+              {resource.TypeResource}
+            </div>
+            <div className={classes.resourceDisplay}>
+              <h4 style={{marginBottom: 5, marginTop: 10}}>Description</h4>
+              {resource.Description}
+            </div>
             
             <h2 className={classes.ratingTitle}>Rating:</h2>
             <Typography gutterBottom>Level of difficulty</Typography>
