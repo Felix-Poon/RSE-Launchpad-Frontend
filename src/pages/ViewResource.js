@@ -132,7 +132,6 @@ export function ViewResource(props) {
       setRating({"understanding": `${resource.CommunityRatings.EaseOfUnderstanding}`,
                   "difficulty": `${resource.CommunityRatings.DepthOfMaterial}`,
                   "reliability": `${resource.CommunityRatings.Reliability}` })
-
       if(validURL(resource.Location)) {
         setValidLocation(true);
       }
